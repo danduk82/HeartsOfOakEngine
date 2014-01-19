@@ -30,7 +30,7 @@ The sources and binaries will need approx 3Gb of Hard drive space (if you instal
  - g++
  - cpp
 
-1.1.2 Build the dependencies
+1.1.2 Build the build instructions
 
 Open a terminal and go to the root folder of HeartsOfOakEngine and type:
 
@@ -38,7 +38,7 @@ Open a terminal and go to the root folder of HeartsOfOakEngine and type:
 
 or
 
-- $ cmake -D<your-custom-install-dir> .
+- $ cmake -DCMAKE_INSTALL_PREFIX=<your-custom-install-dir> .
 
 depending if you want to provide a custom install dir (which is highly suggested by the way). 
 
@@ -115,7 +115,7 @@ in the command line run:
 
 or
 
--  cmake -D<your-custom-install-dir> .
+-  cmake -DCMAKE_INSTALL_PREFIX=<your-custom-install-dir> .
 
 depending if you want to provide a custom install dir (which is highly suggested by the way).
 
