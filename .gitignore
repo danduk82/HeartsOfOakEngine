@@ -1,0 +1,14 @@
+dependencies
+bin
+build
+Makefile
+*~
+.cproject
+.project
+.settings
+CMakeCache.txt
+CMakeFiles
+*.cbp
+*.layout
+cmake_install.cmake
+install_manifest.txt
