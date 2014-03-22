@@ -199,6 +199,7 @@ message("OIS cmake path : ${CMAKE_INSTALL_PREFIX}/lib/OGRE/cmake")
 
 
 # "original" GIT_REPOSITORY https://github.com/th3flyboy/SkyX.git
+# using my own fork to be sure it exists
 # External project : OGRE SKYX PLUGIN
 ExternalProject_Add(SKYX
 GIT_REPOSITORY https://github.com/danduk82/SkyX.git
