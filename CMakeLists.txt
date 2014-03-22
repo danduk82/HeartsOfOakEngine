@@ -1,3 +1,26 @@
+#-----------------------------------------------------------------------------
+# Filename:    CMakeLists.txt
+#-----------------------------------------------------------------------------
+# Purpose: build the dependencies and the engine for:
+# "Hearts of Oak, Conquest of the seas" (see www.piratesahoy.net)
+#-----------------------------------------------------------------------------
+#
+# This source file is part of the
+#                        _                __     ___      _    
+#   /\  /\___  __ _ _ __| |_ ___    ___  / _|   /___\__ _| | __
+#  / /_/ / _ \/ _` | '__| __/ __|  / _ \| |_   //  // _` | |/ /
+# / __  /  __/ (_| | |  | |_\__ \ | (_) |  _| / \_// (_| |   < 
+# \/ /_/ \___|\__,_|_|   \__|___/  \___/|_|   \___/ \__,_|_|\_\
+#                                                              
+#    __            _                                           
+#   /__\ __   __ _(_)_ __   ___                                
+#  /_\| '_ \ / _` | | '_ \ / _ \                               
+# //__| | | | (_| | | | | |  __/                               
+# \__/|_| |_|\__, |_|_| |_|\___|                               
+#            |___/                                             
+# 
+#-----------------------------------------------------------------------------
+# 
 # CMake build project to build the engine for Hearts of Oak, including 
 # the necessary external projects (OGRE3d, CEGUI, etc). 
 # 
@@ -54,7 +77,7 @@ SET(LIBOGRED ${CMAKE_INSTALL_PREFIX}/lib/libOgreMain_d.so)
 SET(LIBOIS ${CMAKE_INSTALL_PREFIX}/lib/libOIS.so)
 SET(LIBOGRE ${CMAKE_INSTALL_PREFIX}/lib/libOgreMain.so)
 
-SET(GML_H_PATH ${CMAKE_INSTALL_PREFIX}/include)
+SET(GLM_H_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 MESSAGE("LIBOIS = ${LIBOIS}")
 MESSAGE("LIBOGRE = ${LIBOGRE}")
@@ -112,23 +135,30 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 DEPENDS OGRE3D BULLET)
 
 
+# new version of CEGUI needs the new version of GLM
 # External project : OpenGL Math Library
-ExternalProject_Add(GML
-GIT_REPOSITORY https://github.com/g-truc/glm.git
-CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
--DCMAKE_BUILD_TYPE:STRING=${BUILD_TARGET};
--DGLM_TEST_ENABLE:BOOL=TRUE;
--DBUILD_SHARED_LIBS:BOOL=TRUE
-BUILD_COMMAND /bin/true
-PREFIX ${DEP_DIR}/GML)
+#ExternalProject_Add(
+#    glm
+#    PREFIX ${CMAKE_BINARY_DIR}/glm
+#    GIT_REPOSITORY https://github.com/g-truc/glm.git
+#    CONFIGURE_COMMAND ""
+#    BUILD_COMMAND ""
+#    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
+#                    <SOURCE_DIR>/glm ${CMAKE_BINARY_DIR}/installed/glm
+#    LOG_DOWNLOAD ON
+#    LOG_INSTALL ON
+#    )
+    
 
 #https://bitbucket.org/cegui/cegui
 #https://danduk82_@bitbucket.org/danduk82_/cegui
 #HG_TAG ${CEGUI_SDK_VERSION}
+#-DGLM_H_PATH:PATH=${GLM_H_PATH}
 
 # External project : CEGUI (GUI-system)
 ExternalProject_Add(CEGUI
-HG_REPOSITORY https://danduk82_@bitbucket.org/danduk82_/cegui
+HG_REPOSITORY https://bitbucket.org/cegui/cegui
+HG_TAG ${CEGUI_SDK_VERSION}
 CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DCMAKE_BUILD_TYPE:STRING=${BUILD_TARGET};
 -DBUILD_SHARED_LIBS:BOOL=TRUE;
@@ -141,7 +171,6 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DOGRE_H_PATH:PATH=${OGRE_HOME}/include/OGRE;
 -DOIS_H_PATH:PATH=${OGRE_HOME}/include/OIS;
 -DCEGUI_SAMPLES_ENABLED:BOOL=FALSE;
--DGML_H_PATH:PATH=${GML_H_PATH}
 PREFIX ${DEP_DIR}/CEGUI
 DEPENDS OGRE3D)
 
@@ -166,12 +195,20 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DBUILD_SHARED_LIBS:BOOL=TRUE;
 DEPENDS OGRE3D)
 
+message("OIS cmake path : ${CMAKE_INSTALL_PREFIX}/lib/OGRE/cmake")
+
+
+# "original" GIT_REPOSITORY https://github.com/th3flyboy/SkyX.git
 # External project : OGRE SKYX PLUGIN
 ExternalProject_Add(SKYX
-GIT_REPOSITORY https://github.com/th3flyboy/SkyX.git
+GIT_REPOSITORY https://github.com/danduk82/SkyX.git
 PREFIX ${DEP_DIR}/Ogre_SkyX
 CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DCMAKE_BUILD_TYPE:STRING=${BUILD_TARGET};
+-DOGRE_HOME:PATH=${OGRE_HOME};
+-DSKYX_DEPENDENCIES_DIR:PATH=${OGRE_HOME};
+-DSKYX_BUILD_SAMPLES:BOOL=FALSE;
+-DSKYX_INSTALL_SAMPLES:BOOL=FALSE;
 -DCMAKE_MODULE_PATH:PATH=${CMAKE_INSTALL_PREFIX}/lib/OGRE/cmake;
 -DBUILD_SHARED_LIBS:BOOL=TRUE;
 DEPENDS OGRE3D)
