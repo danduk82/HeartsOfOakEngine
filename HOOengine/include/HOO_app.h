@@ -36,23 +36,12 @@
 
 #define __HOO_APP_h_
 
-//#include <OgreCamera.h>
-//#include <OgreEntity.h>
-//#include <OgreLogManager.h>
-//#include <OgreRoot.h>
-//#include <OgreViewport.h>
-//#include <OgreSceneManager.h>
-//#include <OgreRenderWindow.h>
-//#include <OgreConfigFile.h>
-//
-//#include <OISEvents.h>
-//#include <OISInputManager.h>
-//#include <OISKeyboard.h>
-//#include <OISMouse.h>
-
 
 #include "Ogre.h"
 #include "OIS.h"
+#include "CEGUI/CEGUI.h"
+
+
 namespace HOO{
 	class FrameListener : public Ogre::FrameListener
 	{
@@ -91,9 +80,11 @@ namespace HOO{
 
 		int num;
 		int endnum;
+
 	public:
 
 		ResourceListener(void);
+		~ResourceListener(void);
 		void resourceGroupScriptingStarted (const Ogre::String &groupName, size_t scriptCount);
 		void scriptParseStarted (const Ogre::String &scriptName, bool &skiphisScript);
 		void scriptParseEnded (const Ogre::String &scriptName, bool skipped);

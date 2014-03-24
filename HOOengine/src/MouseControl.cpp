@@ -1,6 +1,6 @@
 #include "HOO_app.h"
 
-bool ITutorial02::mouseMoved(const OIS::MouseEvent &arg)
+/*bool ITutorial02::mouseMoved(const OIS::MouseEvent &arg)
 {
 	// If we are dragging the left mouse button.
 		if (mLMouseDown)
@@ -88,3 +88,4 @@ bool ITutorial02::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID i
 	} // else if
 	return true;
 }
+*/

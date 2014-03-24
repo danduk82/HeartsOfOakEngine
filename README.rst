@@ -119,6 +119,10 @@ or
 
 depending if you want to provide a custom install dir (which is highly suggested by the way).
 
+and then
+
+- make && make install
+
 This will download the requested dependencies for HOO and build them, and then build the engine itself
 
 ________________________________________________________________________________________________________

@@ -1,5 +1,5 @@
 #include "HOO_app.h"
-
+// samy
 
 HOO::FrameListener::FrameListener(){}
 HOO::FrameListener::~FrameListener(){}
@@ -184,7 +184,9 @@ bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
 HOO::ResourceListener::ResourceListener(){
 	num = 0;
 	endnum = 0;
+}
 
+HOO::ResourceListener::~ResourceListener(){
 }
 
 void HOO::ResourceListener::resourceGroupScriptingStarted (const Ogre::String &groupName, size_t scriptCount){

@@ -2,7 +2,7 @@
 
 #include "HOO_app.h"
 
-
+/*
 void ITutorial02::initTerrain(void)
 {
 	Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
@@ -135,3 +135,4 @@ void ITutorial02::configureTerrainDefaults(Ogre::Light* light)
 	defaultimp.layerList[2].textureNames.push_back("growth_weirdfungus-03_diffusespecular.dds");
 	defaultimp.layerList[2].textureNames.push_back("growth_weirdfungus-03_normalheight.dds");
 }
+*/
