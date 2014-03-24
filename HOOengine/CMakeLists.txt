@@ -20,25 +20,33 @@
 # Purpose: build the engine for:
 # "Hearts of Oak, Conquest of the seas" (see www.piratesahoy.net)
 # 
+# Prerequisites:
+# To build this project, CMAKE v.2.8.12+ is necessary. Moreover, GIT, MERCURIAL
+# and SVN must be installed on the computer. See "README.rst" in the root folder of
+# the project.
+# 
 # Author: Andrea Borghi, alias Danduk82
 # Creation Date: 11.12.2013
 # License: This engine is provided under the terms of the WTFPL (www.wtfpl.net)
 
+
+# we NEED cmake V>=2.8.12. This is required for the external projects 
 cmake_minimum_required(VERSION 2.8.12)
 
-# third party libraries versions needed
+# name of the executable/project
 set(HOO_PROJECT engine)
 project(${HOO_PROJECT})
 
+# third party libraries versions
 set(OGRE_SDK_VERSION v1-8)
 set(CEGUI_SDK_VERSION v0-8)
 set(OPENAL_VERSION_TAG openal-soft-1.15.1)
 
 # directories
 set(DEP_DIR dependencies)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
+# select build target. Default will be "Debug" until alpha release version
 if(NOT DEFINED BUILD_TARGET )
     set(BUILD_TARGET Debug)
 endif(NOT DEFINED BUILD_TARGET)
@@ -48,24 +56,29 @@ if(${BUILD_TARGET} STREQUAL Debug)
     MESSAGE("DEBUG! SUFF = ${SUFF}")
 endif(${BUILD_TARGET} STREQUAL Debug)
 
-MESSAGE("BUILD_TARGET is ${BUILD_TARGET}")
-MESSAGE(CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX})
+MESSAGE(STATUS "BUILD_TARGET is ${BUILD_TARGET}")
+MESSAGE(STATUS CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX})
 
+# these are fundamental
 SET(OGRE_HOME ${CMAKE_INSTALL_PREFIX})
 SET(LIBOISD ${CMAKE_INSTALL_PREFIX}/lib/libOIS_d.so)
 SET(LIBOGRED ${CMAKE_INSTALL_PREFIX}/lib/libOgreMain_d.so)
 SET(LIBOIS ${CMAKE_INSTALL_PREFIX}/lib/libOIS.so)
 SET(LIBOGRE ${CMAKE_INSTALL_PREFIX}/lib/libOgreMain.so)
 
+# GLM not used for instance, but anyway...
 SET(GLM_H_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 MESSAGE("LIBOIS = ${LIBOIS}")
 MESSAGE("LIBOGRE = ${LIBOGRE}")
 
 include(ExternalProject)
+# download and compile all the dependencies
 include(HOO_dependencies)
+# configure dependencies build
 include(HOO_metDependencies)
 
+# headers and source files for the engine itself
 set(HDRS
 	"./include/HOO_app.h"
     "./include/OIS_2_CEGUI.h"
@@ -79,6 +92,7 @@ set(SRCS
 	./src/engine.cpp
 )
  
+# include directories for the engine
 include_directories(${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
@@ -88,22 +102,18 @@ include_directories(${OIS_INCLUDE_DIRS}
     )
 
 add_executable(${HOO_PROJECT} ${HDRS} ${SRCS} )
-add_dependencies(${HOO_PROJECT} RescanOgre RescanOIS RescanCEGUI RescanCCS )
 
-if(${OGRE_FOUND})
-    target_link_libraries(${HOO_PROJECT} ${OGRE_LIBRARY})
-endif()
+# HOO_PROJECT is dependent on all the dependencies
+add_dependencies(${HOO_PROJECT} ${HOO_NEEDED_DEPENDENCIES})
 
+# link engine and needed libraries
+set(TARGET_LINK_LIBRARIES ${OGRE_LIBRARY} ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${CEGUI_LIBRARY} ${CEGUI_LIBRARIES} ${CEGUI_OGRE_LIBRARY})
+target_link_libraries(${HOO_PROJECT} ${TARGET_LINK_LIBRARIES} )
 
-set(TARGET_LINK_LIBRARIES ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${CEGUI_LIBRARY} ${CEGUI_LIBRARIES} ${CEGUI_OGRE_LIBRARY})
-
-target_link_libraries(${HOO_PROJECT} ${OGRE_LIBRARY} )
-
-if(UNIX)
- 
+# install directives
+if(UNIX) 
 	install(TARGETS ${HOO_PROJECT}
 		RUNTIME DESTINATION bin
 		CONFIGURATIONS All)
- 
 endif(UNIX)
  
