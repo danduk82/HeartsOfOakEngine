@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//  Filename:    HOO.h
+//  Filename:    HOO_app.h
 // -----------------------------------------------------------------------------
 //  This source file is part of the
 //                         _                __     ___      _    
@@ -30,11 +30,11 @@
 //  Creation date
 //  19/01/2014
 
-#ifndef __customApplication_h_
+#ifndef __HOO_APP_h_
 
 #define _DEBUG
 
-#define __customApplication_h_
+#define __HOO_APP_h_
 
 //#include <OgreCamera.h>
 //#include <OgreEntity.h>
@@ -113,7 +113,7 @@ namespace HOO{
 		Ogre::SceneManager* _sceneManager;
 		Ogre::Root* _root;
 
-		Ogre::Camera* _camera
+		Ogre::Camera* _camera;
 
 		Ogre::SceneNode* _SinbadNode;
 		Ogre::Entity* _SinbadEnt;
@@ -142,4 +142,4 @@ namespace HOO{
 }
 
 
-#endif // #ifndef __customApplication_h_
+#endif // #ifndef __HOO_APP_h_

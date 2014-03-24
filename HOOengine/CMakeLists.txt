@@ -36,7 +36,7 @@ set(OPENAL_VERSION_TAG openal-soft-1.15.1)
 
 # directories
 set(DEP_DIR dependencies)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
 
 if(NOT DEFINED BUILD_TARGET )
@@ -62,18 +62,13 @@ SET(GLM_H_PATH ${CMAKE_INSTALL_PREFIX}/include)
 MESSAGE("LIBOIS = ${LIBOIS}")
 MESSAGE("LIBOGRE = ${LIBOGRE}")
 
-
 include(ExternalProject)
 include(HOO_dependencies)
 include(HOO_metDependencies)
 
-
-
-
 set(HDRS
 	"./include/HOO_app.h"
     "./include/OIS_2_CEGUI.h"
-
 )
  
 set(SRCS
@@ -89,8 +84,8 @@ include_directories(${OIS_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
     ${CEGUI_INCLUDE_DIR}/../
     ${CCS_INCLUDE_DIRS}
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
     )
-
 
 add_executable(${HOO_PROJECT} ${HDRS} ${SRCS} )
 add_dependencies(${HOO_PROJECT} RescanOgre RescanOIS RescanCEGUI RescanCCS )

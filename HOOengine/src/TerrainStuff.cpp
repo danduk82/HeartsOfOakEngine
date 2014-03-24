@@ -1,6 +1,6 @@
 
 
-#include "TutorialApplication.h"
+#include "HOO_app.h"
 
 
 void ITutorial02::initTerrain(void)
