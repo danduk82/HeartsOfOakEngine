@@ -12,3 +12,5 @@ CMakeFiles
 *.layout
 cmake_install.cmake
 install_manifest.txt
+CMakeCache.txt
+CMakeFiles
