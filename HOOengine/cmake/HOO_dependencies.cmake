@@ -102,6 +102,16 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DBUILD_SHARED_LIBS:BOOL=TRUE;
 DEPENDS OGRE)
 
+## External project : OGRE DEBUG MATERIAL
+#ExternalProject_Add(Ogre_debug_material
+#HG_REPOSITORY https://danduk82_@bitbucket.org/danduk82_/ogre-debug-drawing-utility
+#PREFIX ${DEP_DIR}/Ogre_debug_material
+#CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
+#-DCMAKE_BUILD_TYPE:STRING=${BUILD_TARGET};
+#-DCMAKE_MODULE_PATH:PATH=${CMAKE_INSTALL_PREFIX}/lib/OGRE/cmake;
+#-DBUILD_SHARED_LIBS:BOOL=TRUE;
+#DEPENDS OGRE)
+
 # External project : OGRE CAMERA CONTROL SYSTEM PLUGIN (plugin for easy camera handling)
 ExternalProject_Add(CCS
 SVN_REPOSITORY svn://svn.code.sf.net/p/ogre-ccs/code/trunk

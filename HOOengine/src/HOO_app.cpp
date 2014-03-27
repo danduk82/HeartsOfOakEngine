@@ -1,5 +1,20 @@
 #include "HOO_app.h"
 
+
+Ogre::Entity * HOO::allocateMeshToNode(Ogre::SceneManager * SceneManager, const Ogre::String& entityName, const Ogre::String& meshName ){
+	Ogre::Entity * Ent;
+	try{
+		Ent = SceneManager->createEntity( entityName, meshName );
+	} catch( Ogre::Exception & e ){
+		Ent = SceneManager->createEntity( entityName, "Sinbad.mesh");
+		Ogre::String message = "WARNING ! Failed to load the following mesh : ";
+		message += meshName;
+		Ogre::LogManager::getSingletonPtr()->logMessage( message);
+	}
+	return Ent;
+}
+
+
 HOO::FrameListener::FrameListener(){}
 HOO::FrameListener::~FrameListener(){}
 
@@ -358,7 +373,21 @@ void HOO::Application::createScene(){
 
 	_sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+	// Create a skydome
+	_sceneManager->setSkyDome(true, "Examples/CloudySky", 30, 5);
+
+	Ogre::SceneNode* barrelNode = _sceneManager->getRootSceneNode()->createChildSceneNode("barrelSceneNode");
+
+	Ogre::Entity *barrel = allocateMeshToNode(_sceneManager, "barrel", "barrel.mesh" );
+    barrel->setCastShadows(true);
+	barrelNode->attachObject( barrel );
+	barrelNode->setPosition(Ogre::Vector3(1300,0,500));
+
+#ifdef _DEBUG
+	_sceneManager->showBoundingBoxes(true);
+#endif
 }
+
 
 void HOO::Application::renderOneFrame(){
 	Ogre::WindowEventUtilities::messagePump();

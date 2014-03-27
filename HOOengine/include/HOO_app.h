@@ -41,8 +41,29 @@
 #include "OIS.h"
 #include "CEGUI/CEGUI.h"
 
+// Camera Control System
+#include "CCSCameraControlSystem.h"
+#include "CCSBasicCameraModes.h"
+#include "CCSFreeCameraMode.h"
+#include "CCSOrbitalCameraMode.h"
+
+
 
 namespace HOO{
+	/** Create an Entity (instance of a discrete mesh). Usint Ogre::SceneManager::createEntity(const Ogre::String&, const Ogre::String&)
+	 * This function allocates the mesh provided in parameters. But if the given mesh should not be found, than it
+	 * assign a stupid pink box, and log the inicidend to the Ogre log pipe instead of crashing the engine. Useful for debug reasons.
+		@param
+			SceneManager A pointer to the scenemanager.
+		@param
+			entityName the name that the entity (a string)
+		@param
+			meshName The name of the Mesh it is to be based on (e.g. 'Sinbad.mesh'). The
+			mesh will be loaded if it is not already.
+	*/
+	Ogre::Entity * allocateMeshToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName );
+
+
 	class FrameListener : public Ogre::FrameListener
 	{
 	private:
@@ -97,6 +118,7 @@ namespace HOO{
 		void resourceGroupLoadEnded (const Ogre::String &groupName);
 
 	};
+
 
 	class Application
 	{
