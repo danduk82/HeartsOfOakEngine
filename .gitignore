@@ -14,3 +14,5 @@ cmake_install.cmake
 install_manifest.txt
 Ogre.log
 ogre.cfg
+CMakeCache.txt
+CMakeFiles
