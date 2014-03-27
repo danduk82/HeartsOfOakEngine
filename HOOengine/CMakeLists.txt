@@ -111,9 +111,21 @@ set(TARGET_LINK_LIBRARIES ${OGRE_LIBRARY} ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${C
 target_link_libraries(${HOO_PROJECT} ${TARGET_LINK_LIBRARIES} )
 
 # install directives
-if(UNIX) 
-	install(TARGETS ${HOO_PROJECT}
-		RUNTIME DESTINATION bin
-		CONFIGURATIONS All)
-endif(UNIX)
+install(TARGETS ${HOO_PROJECT}
+	RUNTIME DESTINATION bin
+	CONFIGURATIONS All)
+
+
+#if(UNIX) 
+#	install(TARGETS ${HOO_PROJECT}
+#		RUNTIME DESTINATION bin
+#		CONFIGURATIONS All)
+#	
+#	install(FILES ${CMAKE_SOURCE_DIR}/plugins.cfg
+#	    ${CMAKE_SOURCE_DIR}/plugins_d.cfg
+#        ${CMAKE_SOURCE_DIR}/resources.cfg
+#        ${CMAKE_SOURCE_DIR}/resources_d.cfg
+#        DESTINATION bin
+#        CONFIGURATIONS Release RelWithDebInfo Debug)
+#endif(UNIX)
  

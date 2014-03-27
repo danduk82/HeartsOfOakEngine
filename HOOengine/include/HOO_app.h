@@ -106,8 +106,8 @@ namespace HOO{
 
 		Ogre::Camera* _camera;
 
-		Ogre::SceneNode* _SinbadNode;
-		Ogre::Entity* _SinbadEnt;
+		Ogre::SceneNode* _PlayerNode;
+		Ogre::Entity* _PlayerEnt;
 
 		FrameListener* _listener;
 
@@ -126,6 +126,8 @@ namespace HOO{
 		void createCamera(void);
 		void createScene(void);
 		void renderOneFrame(void);
+		void computePhysics(void);
+		void outputSound(void);
 		bool keepRunning(void);
 
 		bool go(void);

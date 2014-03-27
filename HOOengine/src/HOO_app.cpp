@@ -1,5 +1,4 @@
 #include "HOO_app.h"
-// samy
 
 HOO::FrameListener::FrameListener(){}
 HOO::FrameListener::~FrameListener(){}
@@ -328,7 +327,7 @@ int HOO::Application::startup(){
 	createScene();
 
 	_listener = new HOO::FrameListener();
-	_listener->StartFrameListener(window,camera,viewport,_SinbadNode,_SinbadEnt);
+	_listener->StartFrameListener(window,camera,viewport,_PlayerNode,_PlayerEnt);
 
 	_root->addFrameListener(_listener);
 
@@ -340,9 +339,9 @@ int HOO::Application::startup(){
 }
 
 void HOO::Application::createScene(){
-	_SinbadEnt = _sceneManager->createEntity("Sinbad.mesh");
-	_SinbadNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
-	_SinbadNode->attachObject(_SinbadEnt);
+	_PlayerEnt = _sceneManager->createEntity("Sinbad.mesh");
+	_PlayerNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
+	_PlayerNode->attachObject(_PlayerEnt);
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
 	Ogre::MeshManager::getSingleton().createPlane("plane",
@@ -370,6 +369,14 @@ bool HOO::Application::keepRunning(){
 	return _keepRunning;
 }
 
+void HOO::Application::computePhysics(){
+	return;
+}
+
+void HOO::Application::outputSound(){
+	return;
+}
+
 bool HOO::Application::go(){
 	/*
 	 * The main game loop.
@@ -377,6 +384,8 @@ bool HOO::Application::go(){
 	startup();
 	while(keepRunning()){
 		renderOneFrame();
+		computePhysics();
+		outputSound();
 	}
 	shutDown();
 	return 0;
