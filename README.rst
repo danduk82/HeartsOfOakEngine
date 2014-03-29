@@ -30,7 +30,7 @@ The sources and binaries will need approx 3Gb of Hard drive space (if you instal
  - g++
  - cpp
 
-1.1.2 Build the build instructions
+1.1.2 Build the engine
 
 Open a terminal and go to the root folder of HeartsOfOakEngine and type:
 
@@ -42,18 +42,21 @@ or
 
 depending if you want to provide a custom install dir (which is highly suggested by the way). 
 
+then build the dependencies by typing
 
-1.1.3 Build the engine
+- $ make
 
-in command line, type:
+and now to build the engine, redo the same:
 
-- $ make && make install
-
-and that's all folks...
+- $ cmake .
+- $ make 
 
 
 1.2 WINDOWS install
 -------------------
+
+The following procedure applies if you want tu use the MinGW compiler. If you want to use 
+MS compilers, the procedure should be easier, but I let you adapt the following to you needs. ;)
 
 1.2.1 INSTALL `MINGW compiler and its SHELL <http://www.mingw.org/>`_
 
@@ -109,21 +112,24 @@ try adding the corresponding software to the *PATH* environment variable or to r
 
 1.2.8 Install and compile the engine
 
-in the command line run:
+Open a terminal and go to the root folder of HeartsOfOakEngine and type:
 
--  cmake .
+- $ cmake .
 
 or
 
--  cmake -DCMAKE_INSTALL_PREFIX=<your-custom-install-dir> .
+- $ cmake -DCMAKE_INSTALL_PREFIX=<your-custom-install-dir> .
 
-depending if you want to provide a custom install dir (which is highly suggested by the way).
+depending if you want to provide a custom install dir (which is highly suggested by the way). 
 
-and then
+then build the dependencies by typing
 
-- make && make install
+- $ make
 
-This will download the requested dependencies for HOO and build them, and then build the engine itself
+and now to build the engine, redo the same:
+
+- $ cmake .
+- $ make 
 
 ________________________________________________________________________________________________________
 
