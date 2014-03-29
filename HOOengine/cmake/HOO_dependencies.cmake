@@ -8,6 +8,15 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DBUILD_SHARED_LIBS:BOOL=TRUE
 PREFIX ${DEP_DIR}/ogreDeps)
 
+### External project : OIS PHYSICS (physics engine)
+#ExternalProject_Add(OIS
+#SVN_REPOSITORY  svn://svn.code.sf.net/p/wgois/code/
+#CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
+#-DCMAKE_BUILD_TYPE:STRING=${BUILD_TARGET};
+#-DBUILD_SHARED_LIBS:BOOL=TRUE;
+#PREFIX ${DEP_DIR}/OIS)
+
+
 # External project : OGRE (render engine)
 ExternalProject_Add(OGRE
 HG_REPOSITORY http://bitbucket.org/sinbad/ogre/
@@ -17,6 +26,7 @@ CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX};
 -DBUILD_SHARED_LIBS:BOOL=TRUE
 PREFIX ${DEP_DIR}/OGRE_SDK
 DEPENDS ogredeps)
+
 
 # External project : OPENAL (audio library)
 ExternalProject_Add(openAL
