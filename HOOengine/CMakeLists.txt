@@ -118,7 +118,7 @@ message(STATUS "OIS_INCLUDE_DIRS = ${OIS_INCLUDE_DIRS}")
 add_executable(${HOO_PROJECT} ${HDRS} ${SRCS} )
 
 # HOO_PROJECT is dependent on all the dependencies
-#add_dependencies(${HOO_PROJECT} ${HOO_NEEDED_DEPENDENCIES})
+add_dependencies(${HOO_PROJECT} ${HOO_NEEDED_DEPENDENCIES})
 #add_dependencies(${HOO_PROJECT} OGRE CEGUI CCS )
 
 # link engine and needed libraries

@@ -61,7 +61,7 @@ namespace HOO{
 			meshName The name of the Mesh it is to be based on (e.g. 'Sinbad.mesh'). The
 			mesh will be loaded if it is not already.
 	*/
-	Ogre::Entity * allocateMeshToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName );
+	Ogre::Entity * allocateEntityToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName );
 
 
 	class FrameListener : public Ogre::FrameListener
@@ -88,10 +88,25 @@ namespace HOO{
 		FrameListener(void);
 		~FrameListener(void);
 
+		/** StartFrameListener is in fact the "real" constructor.
+		 *  This is preferable, so we are sure of the order in which constructors
+		 *  and destructors are called.
+		 */
+
 		void StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent);
+		/** StopFrameListener is in fact the "real" destructor.
+		 *  This is preferable, so we are sure of the order in which constructors
+		 *  and destructors are called.
+		 */
 		void StopFrameListener(void);
 
 		bool frameStarted(const Ogre::FrameEvent& evt);
+		// Overriden
+		virtual bool processUnbufferedKeyInput(const FrameEvent& evt);
+		void processCamaraKeyInput();
+		// Overriden
+		virtual bool processUnbufferedMouseInput(const FrameEvent& evt);
+		virtual void moveCamera();
 
 	};
 
