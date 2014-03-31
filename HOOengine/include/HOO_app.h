@@ -102,10 +102,10 @@ namespace HOO{
 
 		bool frameStarted(const Ogre::FrameEvent& evt);
 		// Overriden
-		virtual bool processUnbufferedKeyInput(const FrameEvent& evt);
-		void processCamaraKeyInput();
+		virtual bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
+		void processCamaraKeyInput(void);
 		// Overriden
-		virtual bool processUnbufferedMouseInput(const FrameEvent& evt);
+		virtual bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
 		virtual void moveCamera();
 
 	};
@@ -164,6 +164,7 @@ namespace HOO{
 		void createScene(void);
 		void renderOneFrame(void);
 		void computePhysics(void);
+		void computeIA(void);
 		void outputSound(void);
 		bool keepRunning(void);
 

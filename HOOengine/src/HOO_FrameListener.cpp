@@ -47,6 +47,12 @@ void HOO::FrameListener::StopFrameListener(){
 	std::cout << "shutdown OIS successful"<<std::endl;
 }
 
+bool HOO::FrameListener::processUnbufferedKeyInput(const Ogre::FrameEvent& evt){return true;}
+void HOO::FrameListener::processCamaraKeyInput(void){return;}
+// Overriden
+bool HOO::FrameListener::processUnbufferedMouseInput(const Ogre::FrameEvent& evt){return true;}
+void HOO::FrameListener::moveCamera(){return;}
+
 bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
 	_Keyboard->capture();
 	if(_Keyboard->isKeyDown(OIS::KC_ESCAPE))

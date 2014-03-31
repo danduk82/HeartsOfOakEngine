@@ -88,6 +88,7 @@ if(${OGRE_FOUND})
 set(HDRS
 	"./include/HOO_app.h"
     "./include/OIS_2_CEGUI.h"
+    "./include/DebugDrawer.h"
 )
  
 set(SRCS
@@ -95,7 +96,10 @@ set(SRCS
 	./src/MouseControl.cpp
 	./src/TerrainStuff.cpp
 	./src/OIS_2_CEGUI.cpp
+	./src/HOO_FrameListener.cpp
+	./src/HOO_ResourceListener.cpp
 	./src/engine.cpp
+	./src/DebugDrawer.cpp
 )
  
 # include directories for the engine

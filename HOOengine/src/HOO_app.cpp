@@ -1,4 +1,6 @@
 #include "HOO_app.h"
+#include <map>
+#include <vector>
 
 
 Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager, const Ogre::String& entityName, const Ogre::String& meshName ){
@@ -12,51 +14,6 @@ Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager, cons
 		Ogre::LogManager::getSingletonPtr()->logMessage( message);
 	}
 	return Ent;
-}
-
-
-HOO::ResourceListener::ResourceListener(){
-	num = 0;
-	endnum = 0;
-}
-
-HOO::ResourceListener::~ResourceListener(){
-}
-
-void HOO::ResourceListener::resourceGroupScriptingStarted (const Ogre::String &groupName, size_t scriptCount){
-	endnum += scriptCount;
-}
-
-void HOO::ResourceListener::scriptParseStarted (const Ogre::String &scriptName, bool &skiphisScript){
-
-}
-
-
-void HOO::ResourceListener::scriptParseEnded (const Ogre::String &scriptName, bool skipped){
-	num++;
-	std::cout << num <<"/" << endnum << std::endl;
-}
-
-void HOO::ResourceListener::resourceGroupScriptingEnded (const Ogre::String &groupName){
-}
-
-void HOO::ResourceListener::resourceGroupLoadStarted (const Ogre::String &groupName, size_t resourceCount){
-	std::cout << "!!!!" << resourceCount << std::endl;
-}
-
-void HOO::ResourceListener::resourceLoadStarted (const Ogre::ResourcePtr &resource){
-}
-
-void HOO::ResourceListener::resourceLoadEnded (void){
-}
-
-void HOO::ResourceListener::worldGeometryStageStarted (const Ogre::String &description){
-}
-
-void HOO::ResourceListener::worldGeometryStageEnded (void){
-}
-
-void HOO::ResourceListener::resourceGroupLoadEnded (const Ogre::String &groupName){
 }
 
 HOO::Application::Application(){
@@ -198,7 +155,7 @@ void HOO::Application::createScene(){
 
 	Ogre::SceneNode* barrelNode = _sceneManager->getRootSceneNode()->createChildSceneNode("barrelSceneNode");
 
-	Ogre::Entity *barrel = allocateMeshToNode(_sceneManager, "barrel", "barrel.mesh" );
+	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager, "barrel", "barrel.mesh" );
     barrel->setCastShadows(true);
 	barrelNode->attachObject( barrel );
 	barrelNode->setPosition(Ogre::Vector3(1300,0,500));
@@ -207,7 +164,6 @@ void HOO::Application::createScene(){
 	_sceneManager->showBoundingBoxes(true);
 #endif
 }
-
 
 void HOO::Application::renderOneFrame(){
 	Ogre::WindowEventUtilities::messagePump();
@@ -222,18 +178,25 @@ void HOO::Application::computePhysics(){
 	return;
 }
 
+void HOO::Application::computeIA(){
+	return;
+}
+
 void HOO::Application::outputSound(){
 	return;
 }
 
+/**
+ * go(): This is in fact the main game loop.
+ * For the moment it computes physics and output sounds on each frame
+ * but this could be optimized further. It also computes IA on each frame...
+ */
 bool HOO::Application::go(){
-	/*
-	 * The main game loop.
-	 */
 	startup();
 	while(keepRunning()){
 		renderOneFrame();
 		computePhysics();
+		computeIA();
 		outputSound();
 	}
 	shutDown();
