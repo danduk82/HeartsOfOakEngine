@@ -255,6 +255,9 @@ void DebugDrawer::initialise()
         manualObject->end();
  
 		linesIndex = trianglesIndex = 0;
+
+        // enable it by default, was missing...
+		isEnabled= true;
 }
  
 void DebugDrawer::setIcoSphereRecursionLevel(int recursionLevel)

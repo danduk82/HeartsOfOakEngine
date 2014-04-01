@@ -36,7 +36,12 @@
 
 #define __HOO_APP_h_
 
+// include some stl useful utilities
+#include <map>
+#include <vector>
+#include <iostream>
 
+// base includes for the whole application
 #include "Ogre.h"
 #include "OIS.h"
 #include "CEGUI/CEGUI.h"
@@ -47,9 +52,15 @@
 #include "CCSFreeCameraMode.h"
 #include "CCSOrbitalCameraMode.h"
 
+// Debug drawing functions
+#include "DebugDrawer.h"
+
+typedef  std::vector<Ogre::Entity*> entityVector;
+
 
 
 namespace HOO{
+
 	/** Create an Entity (instance of a discrete mesh). Usint Ogre::SceneManager::createEntity(const Ogre::String&, const Ogre::String&)
 	 * This function allocates the mesh provided in parameters. But if the given mesh should not be found, than it
 	 * assign a stupid pink box, and log the inicidend to the Ogre log pipe instead of crashing the engine. Useful for debug reasons.
@@ -61,7 +72,7 @@ namespace HOO{
 			meshName The name of the Mesh it is to be based on (e.g. 'Sinbad.mesh'). The
 			mesh will be loaded if it is not already.
 	*/
-	Ogre::Entity * allocateEntityToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName );
+	Ogre::Entity * allocateEntityToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName, entityVector * entityVector  );
 
 
 	class FrameListener : public Ogre::FrameListener
@@ -74,6 +85,8 @@ namespace HOO{
 		Ogre::Camera* _Cam;
 		Ogre::Viewport* _viewport;
 		float _movementspeed;
+
+		entityVector * _debugEntitiesVector;
 
 		bool comp1,comp2,comp3;
 		bool down1,down2,down3;
@@ -92,8 +105,8 @@ namespace HOO{
 		 *  This is preferable, so we are sure of the order in which constructors
 		 *  and destructors are called.
 		 */
+		void StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent, entityVector * entityDebugVector);
 
-		void StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent);
 		/** StopFrameListener is in fact the "real" destructor.
 		 *  This is preferable, so we are sure of the order in which constructors
 		 *  and destructors are called.
@@ -102,11 +115,12 @@ namespace HOO{
 
 		bool frameStarted(const Ogre::FrameEvent& evt);
 		// Overriden
-		virtual bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
+		bool frameEnded(const Ogre::FrameEvent& evt);
+		bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
 		void processCamaraKeyInput(void);
 		// Overriden
-		virtual bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
-		virtual void moveCamera();
+		bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
+		void moveCamera();
 
 	};
 
@@ -131,9 +145,7 @@ namespace HOO{
 		void worldGeometryStageStarted (const Ogre::String &description);
 		void worldGeometryStageEnded (void);
 		void resourceGroupLoadEnded (const Ogre::String &groupName);
-
 	};
-
 
 	class Application
 	{
@@ -147,6 +159,8 @@ namespace HOO{
 		Ogre::Entity* _PlayerEnt;
 
 		FrameListener* _listener;
+
+		entityVector * _debugDrawEntitiesVector;
 
 		bool _keepRunning;
 

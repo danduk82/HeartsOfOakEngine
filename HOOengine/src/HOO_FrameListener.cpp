@@ -1,12 +1,18 @@
 #include "HOO_app.h"
 
 
-HOO::FrameListener::FrameListener(){}
+HOO::FrameListener::FrameListener(){
+	_debugEntitiesVector=NULL;
+	_node=NULL;
+	_Cam=NULL;
+	_viewport=NULL;
+}
 HOO::FrameListener::~FrameListener(){}
-void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent){
+void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent, entityVector * entityDebugVector){
 	_Cam = cam;
 	_movementspeed = 50.0f;
 	_viewport = viewport;
+	_debugEntitiesVector=entityDebugVector;
 
 	comp1 = false;
 	comp2 = false;
@@ -36,6 +42,8 @@ void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera
 
 	_aniStateTop = ent->getAnimationState("RunTop");
 	_aniStateTop->setLoop(false);
+
+
 }
 
 void HOO::FrameListener::StopFrameListener(){
@@ -53,7 +61,10 @@ void HOO::FrameListener::processCamaraKeyInput(void){return;}
 bool HOO::FrameListener::processUnbufferedMouseInput(const Ogre::FrameEvent& evt){return true;}
 void HOO::FrameListener::moveCamera(){return;}
 
+
+
 bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
+
 	_Keyboard->capture();
 	if(_Keyboard->isKeyDown(OIS::KC_ESCAPE))
 	{
@@ -179,5 +190,20 @@ bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
 	_aniStateTop->addTime(evt.timeSinceLastFrame);
 
 
+	// Right before the frame is rendered, call DebugDrawer to display all the entities
+	// that are in debug mode
+	for(int i_ent =0; i_ent!=_debugEntitiesVector->size(); ++i_ent){
+		DebugDrawer::getSingleton().drawCuboid(_debugEntitiesVector->at(i_ent)->getBoundingBox().getAllCorners(), Ogre::ColourValue::Red, true);
+	}
+	DebugDrawer::getSingleton().build();
+
+	return true;
+}
+
+bool HOO::FrameListener::frameEnded(const Ogre::FrameEvent& evt){
+	// After the frame is rendered, call DebugDrawer::clear()
+	DebugDrawer::getSingleton().clear();
+
+//	(void)evt;
 	return true;
 }

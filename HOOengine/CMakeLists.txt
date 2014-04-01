@@ -90,7 +90,7 @@ set(HDRS
     "./include/OIS_2_CEGUI.h"
     "./include/DebugDrawer.h"
 )
- 
+
 set(SRCS
 	./src/HOO_app.cpp
 	./src/MouseControl.cpp
@@ -101,7 +101,7 @@ set(SRCS
 	./src/engine.cpp
 	./src/DebugDrawer.cpp
 )
- 
+
 # include directories for the engine
 include_directories(${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}

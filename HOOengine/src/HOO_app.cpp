@@ -1,14 +1,13 @@
 #include "HOO_app.h"
-#include <map>
-#include <vector>
 
 
-Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager, const Ogre::String& entityName, const Ogre::String& meshName ){
+Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager, const Ogre::String& entityName, const Ogre::String& meshName, entityVector * entityVector ){
 	Ogre::Entity * Ent;
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
 	} catch( Ogre::Exception & e ){
-		Ent = SceneManager->createEntity( entityName, "Sinbad.mesh");
+		Ent = SceneManager->createEntity( entityName, "ogrehead.mesh");
+		entityVector->push_back(Ent);
 		Ogre::String message = "WARNING ! Failed to load the following mesh : ";
 		message += meshName;
 		Ogre::LogManager::getSingletonPtr()->logMessage( message);
@@ -22,6 +21,7 @@ HOO::Application::Application(){
 	_keepRunning = true;
 	mResourcesCfg = Ogre::StringUtil::BLANK;
 	mPluginsCfg = Ogre::StringUtil::BLANK;
+	_debugDrawEntitiesVector=NULL;
 }
 
 HOO::Application::~Application(){}
@@ -37,6 +37,10 @@ int HOO::Application::shutDown(){
 	}
 	if(_root)
 	{
+		// destroy debug facilities
+		delete DebugDrawer::getSingletonPtr();
+		delete _debugDrawEntitiesVector;
+
 		_root->removeFrameListener(_listener);
 		_root->destroyAllRenderQueueInvocationSequences();
 		_root->destroySceneManager(_sceneManager);
@@ -63,7 +67,6 @@ void HOO::Application::loadResources(){
 
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 				dataname, typeName, sectionName);
-
 		}
 	}
 
@@ -104,6 +107,11 @@ int HOO::Application::startup(){
 
 	_sceneManager = _root->createSceneManager(Ogre::ST_GENERIC);
 
+	// debug drawing facilites
+	new DebugDrawer(_sceneManager, 0.5f);
+
+	_debugDrawEntitiesVector=new entityVector;
+
 	Ogre::Camera* camera = _sceneManager->createCamera("Camera");
 	camera->setPosition(Ogre::Vector3(0,0,50));
 	camera->lookAt(Ogre::Vector3(0,0,0));
@@ -119,7 +127,7 @@ int HOO::Application::startup(){
 	createScene();
 
 	_listener = new HOO::FrameListener();
-	_listener->StartFrameListener(window,camera,viewport,_PlayerNode,_PlayerEnt);
+	_listener->StartFrameListener(window,camera,viewport,_PlayerNode,_PlayerEnt, _debugDrawEntitiesVector);
 
 	_root->addFrameListener(_listener);
 
@@ -134,6 +142,7 @@ void HOO::Application::createScene(){
 	_PlayerEnt = _sceneManager->createEntity("Sinbad.mesh");
 	_PlayerNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
 	_PlayerNode->attachObject(_PlayerEnt);
+
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
 	Ogre::MeshManager::getSingleton().createPlane("plane",
@@ -155,10 +164,16 @@ void HOO::Application::createScene(){
 
 	Ogre::SceneNode* barrelNode = _sceneManager->getRootSceneNode()->createChildSceneNode("barrelSceneNode");
 
-	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager, "barrel", "barrel.mesh" );
-    barrel->setCastShadows(true);
+	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager, "barrel", "barrel.mesh" ,_debugDrawEntitiesVector);
+	barrel->setCastShadows(true);
 	barrelNode->attachObject( barrel );
-	barrelNode->setPosition(Ogre::Vector3(1300,0,500));
+	barrelNode->setPosition(Ogre::Vector3(50,0,50));
+
+	Ogre::SceneNode* barrel2Node = _sceneManager->getRootSceneNode()->createChildSceneNode("barrel2SceneNode");
+	Ogre::Entity *barrel2 = allocateEntityToNode(_sceneManager, "barrel2", "barrel.mesh" ,_debugDrawEntitiesVector);
+	barrel2->setCastShadows(true);
+	barrel2Node->attachObject( barrel2 );
+	barrel2Node->setPosition(Ogre::Vector3(-50,0,-50));
 
 #ifdef _DEBUG
 	_sceneManager->showBoundingBoxes(true);
