@@ -1,16 +1,25 @@
 #include "HOO_app.h"
 
 
-Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager, const Ogre::String& entityName, const Ogre::String& meshName, entityVector * entityVector ){
+Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogre::SceneNode * node, const Ogre::String& entityName, const Ogre::String& meshName, entityVector * debugEntityVector){
 	Ogre::Entity * Ent;
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
 	} catch( Ogre::Exception & e ){
 		Ent = SceneManager->createEntity( entityName, "ogrehead.mesh");
-		entityVector->push_back(Ent);
+		debugEntityVector->push_back(Ent);
 		Ogre::String message = "WARNING ! Failed to load the following mesh : ";
 		message += meshName;
 		Ogre::LogManager::getSingletonPtr()->logMessage( message);
+		node->attachObject(Ent);
+
+		Ogre::String txtName = "ErrorTxtObject_n";
+		message += debugEntityVector->size();
+		Ogre::MovableText* msg = new Ogre::MovableText(txtName, message ,"BlueHighway-8",2,Ogre::ColourValue::Green);
+		msg->setTextAlignment(Ogre::MovableText::H_CENTER, Ogre::MovableText::V_CENTER); // Center horizontally and display above the node
+		Ogre::AxisAlignedBox AABB =Ent->getWorldBoundingBox(true);
+		msg->setLocalTranslation(Ogre::Vector3(0.0f,AABB.getHalfSize()[2],0.0f));
+		node->attachObject(msg);
 	}
 	return Ent;
 }
@@ -98,10 +107,18 @@ int HOO::Application::startup(){
 
 	_root = new Ogre::Root(mPluginsCfg);
 
+// in debug mode, we do not want to click on ogre config dialog every time... ;)
+#ifdef _DEBUG
+	if(!_root->restoreConfig()){
+#endif
+
 	if(!_root->showConfigDialog())
 	{
 		return -1;
 	}
+#ifdef _DEBUG
+	}
+#endif
 
 	Ogre::RenderWindow* window = _root->initialise(true,"PiratesAhoy! Hearts Of Oak, Conquest of the Seas");
 
@@ -143,12 +160,6 @@ void HOO::Application::createScene(){
 	_PlayerNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
 	_PlayerNode->attachObject(_PlayerEnt);
 
-	_debugDrawEntitiesVector->push_back(_PlayerEnt);
-	Ogre::MovableText* msg = new Ogre::MovableText("TXT_001", "this is the caption");
-	msg->setTextAlignment(Ogre::MovableText::H_CENTER, Ogre::MovableText::V_ABOVE); // Center horizontally and display above the node
-	/* msg->setAdditionalHeight( 2.0f ); //msg->setAdditionalHeight( ei.getRadius() ) // apparently not needed from 1.7*/
-	_PlayerNode->attachObject(msg);
-
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
 	Ogre::MeshManager::getSingleton().createPlane("plane",
@@ -170,15 +181,15 @@ void HOO::Application::createScene(){
 
 	Ogre::SceneNode* barrelNode = _sceneManager->getRootSceneNode()->createChildSceneNode("barrelSceneNode");
 
-	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager, "barrel", "barrel.mesh" ,_debugDrawEntitiesVector);
+	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager,barrelNode, "barrel", "barrel.mesh" ,_debugDrawEntitiesVector);
 	barrel->setCastShadows(true);
-	barrelNode->attachObject( barrel );
+	//barrelNode->attachObject( barrel );
 	barrelNode->setPosition(Ogre::Vector3(50,0,50));
 
 	Ogre::SceneNode* barrel2Node = _sceneManager->getRootSceneNode()->createChildSceneNode("barrel2SceneNode");
-	Ogre::Entity *barrel2 = allocateEntityToNode(_sceneManager, "barrel2", "barrel.mesh" ,_debugDrawEntitiesVector);
+	Ogre::Entity *barrel2 = allocateEntityToNode(_sceneManager,barrel2Node, "barrel2", "barrel.mesh" ,_debugDrawEntitiesVector);
 	barrel2->setCastShadows(true);
-	barrel2Node->attachObject( barrel2 );
+	//barrel2Node->attachObject( barrel2 );
 	barrel2Node->setPosition(Ogre::Vector3(-50,0,-50));
 
 #ifdef _DEBUG

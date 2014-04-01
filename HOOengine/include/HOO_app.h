@@ -75,7 +75,7 @@ namespace HOO{
 			meshName The name of the Mesh it is to be based on (e.g. 'Sinbad.mesh'). The
 			mesh will be loaded if it is not already.
 	*/
-	Ogre::Entity * allocateEntityToNode(Ogre::SceneManager * SceneManager,const Ogre::String& entityName, const Ogre::String& meshName, entityVector * entityVector  );
+	Ogre::Entity * allocateEntityToNode(Ogre::SceneManager * SceneManager, Ogre::SceneNode * node ,const Ogre::String& entityName, const Ogre::String& meshName, entityVector * debugEntityVector  );
 
 
 	class FrameListener : public Ogre::FrameListener
