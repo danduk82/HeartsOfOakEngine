@@ -61,7 +61,6 @@
 typedef  std::vector<Ogre::Entity*> entityVector;
 
 
-
 namespace HOO{
 
 	/** Create an Entity (instance of a discrete mesh). Usint Ogre::SceneManager::createEntity(const Ogre::String&, const Ogre::String&)

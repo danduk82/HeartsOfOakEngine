@@ -14,7 +14,7 @@ Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogr
 		node->attachObject(Ent);
 
 		Ogre::String txtName = "ErrorTxtObject_n";
-		message += debugEntityVector->size();
+		txtName += debugEntityVector->size();
 		Ogre::MovableText* msg = new Ogre::MovableText(txtName, message ,"BlueHighway-8",2,Ogre::ColourValue::Green);
 		msg->setTextAlignment(Ogre::MovableText::H_CENTER, Ogre::MovableText::V_CENTER); // Center horizontally and display above the node
 		Ogre::AxisAlignedBox AABB =Ent->getWorldBoundingBox(true);
@@ -179,18 +179,14 @@ void HOO::Application::createScene(){
 	// Create a skydome
 	_sceneManager->setSkyDome(true, "Examples/CloudySky", 30, 5);
 
-	Ogre::SceneNode* barrelNode = _sceneManager->getRootSceneNode()->createChildSceneNode("barrelSceneNode");
+	Ogre::SceneNode* LyonHoyNode = _sceneManager->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
+	Ogre::Entity *LyonHoy =_sceneManager->createEntity("LyonHoy", "LyonHoy.mesh" );
 
-	Ogre::Entity *barrel = allocateEntityToNode(_sceneManager,barrelNode, "barrel", "barrel.mesh" ,_debugDrawEntitiesVector);
-	barrel->setCastShadows(true);
+	//Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
+	//LyonHoy->setCastShadows(true);
 	//barrelNode->attachObject( barrel );
-	barrelNode->setPosition(Ogre::Vector3(50,0,50));
+	LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
 
-	Ogre::SceneNode* barrel2Node = _sceneManager->getRootSceneNode()->createChildSceneNode("barrel2SceneNode");
-	Ogre::Entity *barrel2 = allocateEntityToNode(_sceneManager,barrel2Node, "barrel2", "barrel.mesh" ,_debugDrawEntitiesVector);
-	barrel2->setCastShadows(true);
-	//barrel2Node->attachObject( barrel2 );
-	barrel2Node->setPosition(Ogre::Vector3(-50,0,-50));
 
 #ifdef _DEBUG
 	_sceneManager->showBoundingBoxes(true);
