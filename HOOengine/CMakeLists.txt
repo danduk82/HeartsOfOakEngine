@@ -89,6 +89,7 @@ set(HDRS
 	"./include/HOO_app.h"
     "./include/OIS_2_CEGUI.h"
     "./include/DebugDrawer.h"
+    "./include/MovableText.h"
 )
 
 set(SRCS
@@ -100,6 +101,7 @@ set(SRCS
 	./src/HOO_ResourceListener.cpp
 	./src/engine.cpp
 	./src/DebugDrawer.cpp
+	./src/MovableText.cpp
 )
 
 # include directories for the engine

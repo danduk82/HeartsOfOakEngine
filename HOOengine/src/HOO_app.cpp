@@ -143,6 +143,12 @@ void HOO::Application::createScene(){
 	_PlayerNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
 	_PlayerNode->attachObject(_PlayerEnt);
 
+	_debugDrawEntitiesVector->push_back(_PlayerEnt);
+	Ogre::MovableText* msg = new Ogre::MovableText("TXT_001", "this is the caption");
+	msg->setTextAlignment(Ogre::MovableText::H_CENTER, Ogre::MovableText::V_ABOVE); // Center horizontally and display above the node
+	/* msg->setAdditionalHeight( 2.0f ); //msg->setAdditionalHeight( ei.getRadius() ) // apparently not needed from 1.7*/
+	_PlayerNode->attachObject(msg);
+
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
 	Ogre::MeshManager::getSingleton().createPlane("plane",

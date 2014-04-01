@@ -55,6 +55,9 @@
 // Debug drawing functions
 #include "DebugDrawer.h"
 
+// Debug 3D text
+#include "MovableText.h"
+
 typedef  std::vector<Ogre::Entity*> entityVector;
 
 

@@ -193,7 +193,7 @@ bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
 	// Right before the frame is rendered, call DebugDrawer to display all the entities
 	// that are in debug mode
 	for(int i_ent =0; i_ent!=_debugEntitiesVector->size(); ++i_ent){
-		DebugDrawer::getSingleton().drawCuboid(_debugEntitiesVector->at(i_ent)->getBoundingBox().getAllCorners(), Ogre::ColourValue::Red, true);
+		DebugDrawer::getSingleton().drawCuboid(_debugEntitiesVector->at(i_ent)->getWorldBoundingBox(true).getAllCorners(), Ogre::ColourValue::Red, true);
 	}
 	DebugDrawer::getSingleton().build();
 
