@@ -1,0 +1,316 @@
+particle_system MySmoke1
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 100
+        direction 0 1 0
+        velocity 5
+        angle 30
+        time_to_live_min 1
+        time_to_live_max 10
+        colour_range_start 1 1 1
+        colour_range_end 0.9 0.9 0.9
+    }
+}
+
+particle_system MySmoke2
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 30
+        direction 1 0 0
+        velocity 20
+        duration 1
+        repeat_delay 1
+    }
+}
+
+// avec affectors
+particle_system MySmoke3
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 30
+        direction 1 0 0
+        velocity 20
+        time_to_live 100
+    }
+    affector Scaler
+    {
+        rate 5
+    }
+}
+
+// affector for color
+particle_system MySmoke4
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 30
+        direction 1 0 0
+        velocity 20
+        time_to_live 100
+    }
+    affector ColourFader
+    {
+        red -0.0
+        green -0.25
+        blue -0.25
+    }
+}
+
+
+
+// affector p.253
+particle_system MySmoke5
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 30
+        direction 1 0 0
+        velocity 20
+        time_to_live 4
+    }
+    affector ColourFader2
+    {
+        red1 -1.0
+        green1 -1.0
+        blue1 -1.0
+        state_change 2
+        red2 +1
+        green2 +1
+        blue2 +1
+    }
+}
+
+
+// affector p.255
+particle_system MySmoke6
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 30
+        direction 1 0 0
+        velocity 50
+        time_to_live 0.5
+    }
+    affector ColourInterpolator
+    {
+        time0 0
+        colour0 1 1 1
+        
+        time1 0.25
+        colour1 1 0 0
+        
+        time2 0.5
+        colour2 0 1 0
+        
+        time3 0.75
+        colour3 0 0 1
+        
+        time4 1
+        colour4 0 0 0
+    }
+}
+
+// affector p.257
+particle_system MySmoke7
+{
+    material Examples/Smoke
+    particle_width 2
+    particle_height 2
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 100
+        direction 1 0 0
+        velocity 20
+        time_to_live 4
+    }
+    affector DirectionRandomiser
+    {
+        randomness 100
+        scope 1 
+        keep_velocity true
+    }
+}
+
+
+// deflector p.259
+particle_system MySmoke8
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 100
+        direction 0 1 0
+        velocity 20
+        time_to_live 4
+        angle 30
+    }
+    affector DeflectorPlane
+    {
+        plane_point 0 20 0 
+        plane_normal 0 -1 0
+        bounce 1.0
+    }
+}
+
+// deflector p.260
+particle_system MySmoke9
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Point
+    {
+        emission_rate 100
+        direction 0 1 0
+        velocity 20
+        time_to_live 4
+        angle 30
+    }
+    affector DeflectorPlane
+    {
+        plane_point 0 20 0 
+        plane_normal 0 -1 0
+        bounce 1.0
+    }
+    affector DeflectorPlane
+    {
+        plane_point 0 0 0 
+        plane_normal 0 1 0
+        bounce 1.0
+    }
+    affector ColourInterpolator
+    {
+        time0 0
+        colour0 1 1 1
+        
+        time1 0.25
+        colour1 1 0 0
+        
+        time2 0.5
+        colour2 0 1 0
+        
+        time3 0.75
+        colour3 0 0 1
+        
+        time4 1
+        colour4 0 0 0
+    }
+}
+
+
+// emitter box, p.261
+particle_system MySmoke10
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Box
+    {
+        height 50
+        width 50
+        depth 50
+        
+        emission_rate 10
+        direction 0 1 0
+        velocity 20
+    }
+}
+
+// emitter ring, p.262
+particle_system MySmoke11
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 1000
+    billboard_type point
+    emitter Ring
+    {
+        height 50
+        width 50
+        
+        inner_height 0.9
+        inner_width 0.9
+        
+        emission_rate 100
+        direction 0 1 0
+        velocity 20
+    }
+}
+
+
+// fireworks p.264
+particle_system Fireworks
+{
+    material Examples/Smoke
+    particle_width 10
+    particle_height 10
+    
+    quota 5000
+    billboard_type point
+    emitter Point
+    {   
+        emission_rate 100
+        direction 0 1 0
+        velocity 50
+        angle 360
+        duration 0.1
+        repeat_delay 1
+        colour_range_start 0 0 0
+        colour_range_end 1 1 1
+    }
+}

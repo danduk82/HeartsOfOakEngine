@@ -1,0 +1,132 @@
+void MyFragmentShader1(out float4 color: COLOR)
+{
+    color=float4(0,0,1,0);
+}
+
+void MyVertexShader1(
+    float4 position : POSITION,
+    out float4 oPosition : POSITION,
+    uniform float4x4 worldViewMatrix)
+{
+    oPosition = mul(worldViewMatrix, position);
+}
+
+
+
+void MyFragmentShader2(float2 uv : TEXCOORD0, out float4 color : COLOR, uniform sampler2D texture)
+{
+    color=tex2D(texture, uv);
+}
+
+void MyVertexShader2(
+    float4 position : POSITION,
+    out float4 oPosition : POSITION,
+    float2 uv : TEXCOORD0,
+    out float2 oUv : TEXCOORD0,
+    uniform float4x4 worldViewMatrix)
+{
+    oPosition = mul(worldViewMatrix, position);
+    oUv = uv;
+}
+
+
+void MyVertexShader4(
+        float4 position        : POSITION,
+        out float4 oPosition    : POSITION, 
+		float4 color		:COLOR,
+		out float4 ocolor		:COLOR,		
+        uniform float4x4 worldViewMatrix)
+{
+    oPosition = mul(worldViewMatrix, position);
+	ocolor = color;
+
+}
+ 
+void MyFragmentShader4(	float4 color : COLOR,
+						out float4 oColor : COLOR)
+ 
+{
+    oColor = color;
+}
+
+void MyVertexShader5(
+    uniform float pulseTime,
+    float4 position : POSITION,
+    out float4 oPosition : POSITION,
+    float2 uv : TEXCOORD0,
+    out float2 oUv : TEXCOORD0,
+    uniform float4x4 worldViewMatrix)
+{
+    oPosition = mul(worldViewMatrix, position);
+    oPosition.x *= (2+sin(pulseTime));
+    oUv = uv;
+}
+
+
+
+// grey scale
+void MyFragmentShader5( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture)
+ 
+{
+    float4 temp_color = tex2D(texture, uv);
+    float greyvalue = temp_color.r *0.3 + temp_color.g *0.59 + temp_color.b * 0.11;  
+    oColor = float4(greyvalue,greyvalue,greyvalue,0);
+}
+
+// invert colors
+void MyFragmentShader6( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture)
+ 
+{
+    float4 temp_color = tex2D(texture, uv);  
+    oColor = float4(1.0-temp_color.r, 1.0 - temp_color.g, 1.0 - temp_color.b * 0.11 ,0);
+}
+
+// invert blue and green
+void MyFragmentShader7( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture)
+ 
+{
+    float4 temp_color = tex2D(texture, uv);  
+    oColor = float4(temp_color.r, temp_color.b, temp_color.g,0);
+}
+
+// complex stuff p.180
+void MyFragmentShader8( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture)
+ 
+{
+    float num=50.0;
+    float stepsize=1.0/num;
+    float2 fragment = float2(stepsize * floor(uv.x * num), stepsize * floor(uv.y * num));
+    oColor = tex2D(texture, fragment);    
+}
+
+// complex stuff p.180
+void MyFragmentShader9( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture,
+                        uniform float numPixels)
+ 
+{
+    float num=numPixels;
+    float stepsize=1.0/num;
+    float2 fragment = float2(stepsize * floor(uv.x * num), stepsize * floor(uv.y * num));
+    oColor = tex2D(texture, fragment);    
+}
+
+// p.198
+void MyFragmentShader10( float2 uv : TEXCOORD0,
+                        out float4 oColor : COLOR,
+                        uniform sampler2D texture,
+                        uniform float4 factors)
+ 
+{
+    oColor = tex2D(texture, uv);
+    oColor *= factors;    
+}
