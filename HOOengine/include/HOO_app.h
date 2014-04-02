@@ -32,33 +32,25 @@
 
 #ifndef __HOO_APP_h_
 
-#define _DEBUG
 
 #define __HOO_APP_h_
 
-// include some stl useful utilities
-#include <map>
-#include <vector>
-#include <iostream>
 
-// base includes for the whole application
-#include "Ogre.h"
-#include "OIS.h"
-#include "CEGUI/CEGUI.h"
+// HOO specific headers
+#include "HOO_definitions.h"
+#include "HOO_gameObjects.h"
 
-// Camera Control System
-#include "CCSCameraControlSystem.h"
-#include "CCSBasicCameraModes.h"
-#include "CCSFreeCameraMode.h"
-#include "CCSOrbitalCameraMode.h"
 
-// Debug drawing functions
-#include "DebugDrawer.h"
+#include "ExampleApplication.h"
 
-// Debug 3D text
-#include "MovableText.h"
 
-typedef  std::vector<Ogre::Entity*> entityVector;
+class samy : public ExampleApplication{
+private:
+		Ogre::SceneNode* _PlayerNode;
+		Ogre::Entity* _PlayerEnt;
+public:
+		void createScene(void);
+};
 
 
 namespace HOO{
@@ -91,7 +83,8 @@ namespace HOO{
 		entityVector * _debugEntitiesVector;
 
 		bool comp1,comp2,comp3;
-		bool down1,down2,down3;
+		bool down1,down2,down3, downT;
+		Ogre::PolygonMode _polyMode;
 
 		float _WalkingSpeed;
 		Ogre::SceneNode* _node;
@@ -154,8 +147,11 @@ namespace HOO{
 	private:
 		Ogre::SceneManager* _sceneManager;
 		Ogre::Root* _root;
+		Ogre::RenderWindow* _window;
 
 		Ogre::Camera* _camera;
+		Ogre::Viewport* _viewport;
+
 
 		Ogre::SceneNode* _PlayerNode;
 		Ogre::Entity* _PlayerEnt;

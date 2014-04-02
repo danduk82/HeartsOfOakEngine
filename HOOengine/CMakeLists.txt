@@ -85,11 +85,14 @@ endif(${DEPENDENCIES_ARE_BUILT})
 if(${OGRE_FOUND})
 
 # headers and source files for the engine itself
+# NB: put double quotes because "include" is a cmake directive
 set(HDRS
 	"./include/HOO_app.h"
     "./include/OIS_2_CEGUI.h"
     "./include/DebugDrawer.h"
     "./include/MovableText.h"
+    "./include/HOO_definitions.h"
+    "./include/HOO_gameObjects.h"
 )
 
 set(SRCS
@@ -102,6 +105,9 @@ set(SRCS
 	./src/engine.cpp
 	./src/DebugDrawer.cpp
 	./src/MovableText.cpp
+	./src/smallObjects.cpp
+	./src/Characters.cpp
+	./src/Ship.cpp
 )
 
 # include directories for the engine

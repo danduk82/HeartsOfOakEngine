@@ -1,5 +1,14 @@
 #include "HOO_app.h"
+void samy::createScene(){
+	Ogre::SceneNode* LyonHoyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
+		Ogre::Entity *LyonHoy =mSceneMgr->createEntity("LyonHoy", "LyonHoy.mesh" );
 
+		//Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
+		//LyonHoy->setCastShadows(true);
+		//barrelNode->attachObject( barrel );
+		//LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
+
+}
 
 Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogre::SceneNode * node, const Ogre::String& entityName, const Ogre::String& meshName, entityVector * debugEntityVector){
 	Ogre::Entity * Ent;
@@ -86,14 +95,17 @@ void HOO::Application::loadResources(){
 
 void HOO::Application::createCamera(void)
     {
-        // Create the camera
+		// Create the camera
 		_camera = _sceneManager->createCamera("PlayerCam");
-
-        // Position it at 500 in Z direction
-        //mCamera->setPosition(Vector3(0,0,500));
-        // Look back along -Z
-        //mCamera->lookAt(Vector3(0,0,-300));
+		_camera->setPosition(Ogre::Vector3(0,0,50));
+		_camera->lookAt(Ogre::Vector3(0,0,0));
 		_camera->setNearClipDistance(5);
+		//_camera->setPolygonMode(Ogre::PM_WIREFRAME);
+
+
+		_viewport = _window->addViewport(_camera);
+		_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));
+		_camera->setAspectRatio(Ogre::Real(_viewport->getActualWidth())/ Ogre::Real(_viewport->getActualHeight()));
     }
 
 int HOO::Application::startup(){
@@ -120,37 +132,33 @@ int HOO::Application::startup(){
 	}
 #endif
 
-	Ogre::RenderWindow* window = _root->initialise(true,"PiratesAhoy! Hearts Of Oak, Conquest of the Seas");
-
+	// init application window and root object
+	 _window = _root->initialise(true,"PiratesAhoy! Hearts Of Oak, Conquest of the Seas");
+    // create scenemanager
 	_sceneManager = _root->createSceneManager(Ogre::ST_GENERIC);
 
 	// debug drawing facilites
 	new DebugDrawer(_sceneManager, 0.5f);
+    _debugDrawEntitiesVector=new entityVector;
 
-	_debugDrawEntitiesVector=new entityVector;
+    // init player camera
+    createCamera();
 
-	Ogre::Camera* camera = _sceneManager->createCamera("Camera");
-	camera->setPosition(Ogre::Vector3(0,0,50));
-	camera->lookAt(Ogre::Vector3(0,0,0));
-	camera->setNearClipDistance(5);
-
-
-	Ogre::Viewport* viewport = window->addViewport(camera);
-	viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));
-	camera->setAspectRatio(Ogre::Real(viewport->getActualWidth())/ Ogre::Real(viewport->getActualHeight()));
-
-
+    // load resources
 	loadResources();
+
+	// create scene
 	createScene();
 
+	// create frame listener
 	_listener = new HOO::FrameListener();
-	_listener->StartFrameListener(window,camera,viewport,_PlayerNode,_PlayerEnt, _debugDrawEntitiesVector);
+	_listener->StartFrameListener(_window,_camera,_viewport,_PlayerNode,_PlayerEnt, _debugDrawEntitiesVector);
+    _root->addFrameListener(_listener);
 
-	_root->addFrameListener(_listener);
-
-	Ogre::CompositorManager::getSingleton().addCompositor(viewport, "Compositor2");
-	Ogre::CompositorManager::getSingleton().addCompositor(viewport, "Compositor3");
-	Ogre::CompositorManager::getSingleton().addCompositor(viewport, "Compositor7");
+    // add some compositors
+	Ogre::CompositorManager::getSingleton().addCompositor(_viewport, "Compositor2");
+	Ogre::CompositorManager::getSingleton().addCompositor(_viewport, "Compositor3");
+	Ogre::CompositorManager::getSingleton().addCompositor(_viewport, "Compositor7");
 
 	return 0;
 }
@@ -186,6 +194,7 @@ void HOO::Application::createScene(){
 	//LyonHoy->setCastShadows(true);
 	//barrelNode->attachObject( barrel );
 	LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
+	std::cout << "LyonHoy visibility is set to : "<<LyonHoy->getVisible()<<std::endl;
 
 
 #ifdef _DEBUG
