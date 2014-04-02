@@ -36,7 +36,6 @@
 // we are in debug mode, this is set specifically
 #define _DEBUG
 
-
 // include some stl useful utilities
 #include <map>
 #include <vector>

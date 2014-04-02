@@ -93,6 +93,7 @@ set(HDRS
     "./include/MovableText.h"
     "./include/HOO_definitions.h"
     "./include/HOO_gameObjects.h"
+    "./include/HOO_Character.h"
 )
 
 set(SRCS
@@ -100,14 +101,14 @@ set(SRCS
 	./src/MouseControl.cpp
 	./src/TerrainStuff.cpp
 	./src/OIS_2_CEGUI.cpp
-	./src/HOO_FrameListener.cpp
-	./src/HOO_ResourceListener.cpp
-	./src/engine.cpp
 	./src/DebugDrawer.cpp
 	./src/MovableText.cpp
-	./src/smallObjects.cpp
-	./src/Characters.cpp
-	./src/Ship.cpp
+	./src/HOO_FrameListener.cpp
+	./src/HOO_ResourceListener.cpp
+	./src/HOO_engine.cpp
+	./src/HOO_gameObjects.cpp
+	./src/HOO_Character.cpp
+	./src/HOO_Ship.cpp
 )
 
 # include directories for the engine

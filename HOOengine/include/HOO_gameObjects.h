@@ -39,87 +39,92 @@
 
 namespace HOO{
 
-class Item{
-private:
-	String _name;
-	float _unitWeight;
-	float _minUnitValue;
-	float _meanUnitValue;
-	float _maxUnitValue;
-public:
-	Item(String Name,float unitWeight, float minValue, float maxValue);
-	~Item(void);
-	void computeMeanValue(void);
-	Vector3 getValues(void);
-	String getName(void);
-};
+	/**
+	 * class Item: this class is the basic implementation of an Item
+	 */
+	class Item{
+	private:
+		String _name;
+		float _unitWeight;
+		float _minUnitPrice;
+		float _meanUnitPrice;
+		float _maxUnitPrice;
+	public:
+		Item(String Name,float unitWeight, float minPrice, float maxPrice);
+		~Item(void);
+		void computeMeanValue(void);
+		Vector3 getPrices(void);
+		String getName(void);
+	};
 
-class Goods{
-private:
-	Item _item;
-	int _quantity;
-	float _weigth;
-public:
-	Goods(map<uint32,Item> * ItemMap ,uint32 ItemID, int qty);
-	~Goods(void);
-	void computeWeigth(void);
-	float getWeigth(void);
-	int getQty(void);
-	void setQty(int);
-	void setItem(uint32 ItemID);
-};
+	/**
+	 * Goods class: this class is a mapping between a given item and its
+	 * stored quantity. The class provides basic funtions to get rapidely
+	 * those useful variables.
+	 */
+	class Goods{
+	private:
+		Item _item;
+		int _quantity;
+		float _weigth;
+	public:
+		Goods(std::map<uint32,Item> * ItemMap ,uint32 ItemID, int qty);
+		~Goods(void);
+		void computeWeigth(void);
+		float getWeigth(void);
+		int getQty(void);
+		void setQty(int);
+		void setItem(uint32 ItemID);
+	};
 
-class Inventory{
-private:
-	float * _goldAmount;
-	vector<Goods> * _goods;
-};
+	/**
+	 * a basic inventory class. This is only a class where the goods are
+	 * stored, nothing related to graphical output or representation of the
+	 * inventory.
+	 */
+	class Inventory{
+	private:
+		float _goldAmount;
+		vector<Goods> _goods;
+	public:
+		void addStuff(Goods goods);
+		void addGold(float gold);
+		float getGoldAmount(void);
+		std::vector<String> getGoodsList(void);
 
-class Cloth : public Item{
+	};
 
-};
-
-class Weapon : public Item{
-
-};
-
-class Armor : public Cloth{
-
-};
-
-class ManualGun : public Weapon{
-
-};
-
-class MeleeWeapon : public Weapon{
-
-};
-
-class Ship{
-private:
-	Inventory * _inventory;
-	CannonList * _cannonList;
-};
-
-class CannonList{
-
-};
-
-class Character{
-
-};
-
-class StaticWeapon{
-
-};
-
-class Cannon : public StaticWeapon{
-
-};
-
-class PlayerCharacter : public Character{
-
-};
+//	class Cloth : public Item{
+//
+//	};
+//
+//	class Weapon : public Item{
+//
+//	};
+//
+//	class Armor : public Cloth{
+//
+//	};
+//
+//
+//	class Ship{
+//	private:
+//		Inventory * _inventory;
+//		CannonList * _cannonList;
+//	};
+//
+//	class CannonList{
+//
+//	};
+//
+//
+//	class StaticWeapon{
+//
+//	};
+//
+//	class Cannon : public StaticWeapon{
+//
+//	};
 
 } // end namespace
 
