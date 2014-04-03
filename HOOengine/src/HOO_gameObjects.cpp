@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//  Filename:    smallObjects.cpp
+//  Filename:    gameObjects.cpp
 // -----------------------------------------------------------------------------
 //  This source file is part of the
 //                         _                __     ___      _
@@ -33,4 +33,76 @@
 // HOO specific headers
 #include "HOO_definitions.h"
 #include "HOO_gameObjects.h"
+
+//class Item
+HOO::Item::Item(String Name,float unitWeight, float minPrice, float maxPrice){
+	return;
+}
+HOO::Item::~Item(void){
+	return;
+}
+void HOO::Item::computeMeanValue(void){
+	return;
+}
+HOO::Vector3 HOO::Item::getPrices(void){
+	return;
+}
+HOO::String HOO::Item::getName(void){
+	return;
+}
+
+
+//class Goods
+HOO::Goods::Goods(std::map<HOO::uint32,Item> * ItemMap ,HOO::uint32 ItemID, float qty){
+	return;
+}
+HOO::Goods::~Goods(void){
+	return;
+}
+
+void HOO::Goods::setItem(HOO::uint32 ItemID){
+	return;
+}
+
+
+// class Inventory
+
+void HOO::Inventory::computeGoodsList(void){
+	return;
+}
+void computeTotalWeight(void){
+	return;
+}
+HOO::Inventory::Inventory(float gold = 0.0f){
+	return;
+}
+HOO::Inventory::Inventory(float gold, std::vector<Goods> goodsVector){
+	return;
+}
+HOO::Inventory::~Inventory(){
+	return;
+}
+std::map<HOO::uint32,int> HOO::Inventory::getGoodsList(void){
+	std::map<HOO::uint32,int> goodsList;
+	return goodsList;
+}
+
+int HOO::Inventory::addGold(float gold){
+	return HOO::SUCCESS;
+}
+int HOO::Inventory::removeGold(float gold){
+	return HOO::SUCCESS;
+}
+int HOO::Inventory::addStuff(Goods goods){
+	return HOO::SUCCESS;
+}
+int HOO::Inventory::addStuff(std::vector<Goods> goodsVector){
+	return HOO::SUCCESS;
+}
+int HOO::Inventory::removeStuff(Goods goods){
+	return HOO::SUCCESS;
+}
+int HOO::Inventory::removeStuff(std::vector<Goods> goodsVector){
+	return HOO::SUCCESS;
+}
 

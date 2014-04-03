@@ -40,6 +40,8 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <numeric>  // for "accumulate"
+
 
 // base includes for the whole application
 #include "Ogre.h"
@@ -60,6 +62,11 @@
 
 
 namespace HOO{
+
+enum RETURNSTATUS{
+	SUCCESS=0, INSERTFAILED, INSERTPARTIAL, ERROR
+};
+
 // TYPE DEFINITIONS
 typedef std::vector<Ogre::Entity*> entityVector;
 

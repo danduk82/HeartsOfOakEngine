@@ -1,7 +1,7 @@
 
-============================================================================================
-README for the *Hearts Of Oak, Conquest of the Seas* OGRE3D-Based engine development version
-============================================================================================
+==============================================================================================
+README for the *Hearts Of Oak, Conquest of the Seas* OGRE3D-Based engine (development version)
+==============================================================================================
 This is the game engine based on OGRE3D developed for the game "Hearts Of Oak, 
 Conquest of the Seas" developed by the "PiratesAhoy!" community.
 

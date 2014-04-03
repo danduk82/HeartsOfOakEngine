@@ -37,10 +37,15 @@
 #include "HOO_definitions.h"
 
 
+//std::vector<double> vec;
+//// ... fill vec with values
+//double average = std::accumulate(vec.begin(), vec.end(), 0) / vec.size();
+
 namespace HOO{
 
 	/**
-	 * class Item: this class is the basic implementation of an Item
+	 * class Item: this class is the basic implementation of an Item.
+	 * It sets the min-max prices for the item, its unit weight, and name.
 	 */
 	class Item{
 	private:
@@ -52,29 +57,70 @@ namespace HOO{
 	public:
 		Item(String Name,float unitWeight, float minPrice, float maxPrice);
 		~Item(void);
+		/**
+		 * this methodd simply computes the mean price of the item, in
+		 * the constructor only the min and max price are given
+		 */
 		void computeMeanValue(void);
+		/**
+		 * this method returns the min/average/max prices ot the item
+		 * @return Vector3 = (min, avg, max)
+		 */
 		Vector3 getPrices(void);
+		/**
+		 * this method returns the name of the object
+		 * @return String name
+		 */
 		String getName(void);
 	};
 
 	/**
 	 * Goods class: this class is a mapping between a given item and its
-	 * stored quantity. The class provides basic funtions to get rapidely
+	 * stored quantity. The class provides basic functions to get rapidly
 	 * those useful variables.
 	 */
 	class Goods{
 	private:
-		Item _item;
-		int _quantity;
-		float _weigth;
+		Item * _item;
+		HOO::uint32 _itemUID;
+		float _quantity;
+		float _weight;
+
+		/**
+		 * this method computes the total weight of the stored goods
+		 * @see getWeight
+		 */
+		void computeWeight(void);
+
 	public:
-		Goods(std::map<uint32,Item> * ItemMap ,uint32 ItemID, int qty);
+		Goods(std::map<HOO::uint32,Item> * ItemMap ,HOO::uint32 ItemID, float qty);
 		~Goods(void);
-		void computeWeigth(void);
-		float getWeigth(void);
-		int getQty(void);
-		void setQty(int);
-		void setItem(uint32 ItemID);
+		/**
+		 * this method returns the total weight of the goods
+		 * @see computeWeight
+		 */
+		float getWeight(void);
+		/**
+		 * this method returns the quantity of items
+		 * @return int qty
+		 */
+		float getQty(void);
+		/**
+		 * this method sets the quantity of Items
+		 * @param float qty
+		 */
+		void setQty(float);
+		/**
+		 * this method sets the item that the goods instance is representing.
+		 * The Item is identified by its UID
+		 * @param uint32 ItemID
+		 */
+		void setItem(HOO::uint32 ItemID);
+		/**
+		 * This method return the UID of the Item the instance is representing
+		 * @return uint32 ItemID
+		 */
+		HOO::uint32 getItem(void);
 	};
 
 	/**
@@ -86,11 +132,77 @@ namespace HOO{
 	private:
 		float _goldAmount;
 		vector<Goods> _goods;
+		float _maxWeight;
+		float _currentWeight;
+		std::map<uint32,int> _goodsList;
+
+		/**
+		 * this method computes the goods list
+		 */
+		void computeGoodsList(void);
+		/**
+		 * computes the sum of the weight of all stored goods
+		 * toghether
+		 */
+		void computeTotalWeight(void);
+
 	public:
-		void addStuff(Goods goods);
-		void addGold(float gold);
+		Inventory(float gold = 0.0f);
+		Inventory(float gold, std::vector<goods> goodsVector);
+		~Inventory();
+		/**
+		 * get the gold amount that is stored in the inventory
+		 * @return float amount
+		 */
 		float getGoldAmount(void);
-		std::vector<String> getGoodsList(void);
+		/**
+		 * get the list of the stored goods and their
+		 * respective quantity
+		 * @return std::map<uint32 UID, int amount>
+		 */
+		std::map<uint32,int> getGoodsList(void);
+		/**
+		 * get the sum of the weight of all stored goods
+		 * toghether
+		 * @return float total_weight
+		 */
+		float getTotalWeight(void);
+		/**
+		 * add gold to the inventory
+		 * @param float goldAmount
+		 * @return int sucessStatus
+		 */
+		int addGold(float gold);
+		/**
+		 * remove gold from the inventory
+		 * @param float goldAmount
+		 * @return int sucessStatus
+		 */
+		int removeGold(float gold);
+		/**
+		 * add one good to the inventory
+		 * @param Goods goods
+		 * @return int sucessStatus
+		 */
+		int addStuff(Goods goods);
+		/**
+		 * add a vector of goods to the inventory
+		 * @param std::vector<Goods> goodsVector
+		 * @return int sucessStatus
+		 */
+		int addStuff(std::vector<Goods> goodsVector);
+		/**
+		 * remove one good from the inventory
+		 * @param Goods goods
+		 * @return int sucessStatus
+		 */
+		int removeStuff(Goods goods);
+		/**
+		 * remove one vector of goods from the inventory
+		 * @param std::vector<Goods> goodsVector
+		 * @return int sucessStatus
+		 */
+		int removeStuff(std::vector<Goods> goodsVector);
 
 	};
 
@@ -127,6 +239,22 @@ namespace HOO{
 //	};
 
 } // end namespace
+
+inline void HOO::Goods::computeWeight(void){
+	_weight=_quantity * _item->getWeight();
+	return;
+}
+inline float HOO::Goods::getWeight(void){return _weight;}
+inline float HOO::Goods::getQty(void){return _quantity;}
+inline void HOO::Goods::setQty(float qty){
+	_quantity=qty;
+	return;
+}
+inline HOO::uint32 HOO::Goods::getItem(void){return _itemUID;}
+
+
+inline float HOO::Inventory::getGoldAmount(void){return _goldAmount;}
+inline float HOO::Inventory::getTotalWeight(void){return _currentWeight;}
 
 
 #endif
