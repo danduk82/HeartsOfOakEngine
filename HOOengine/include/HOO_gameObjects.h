@@ -43,6 +43,8 @@
 
 namespace HOO{
 
+	template<class T> float getWeight(T item);
+
 	/**
 	 * class Item: this class is the basic implementation of an Item.
 	 * It sets the min-max prices for the item, its unit weight, and name.
@@ -72,6 +74,10 @@ namespace HOO{
 		 * @return String name
 		 */
 		String getName(void);
+		/**
+		 * get the unit weight of an Item
+		 */
+		float getWeight(void);
 	};
 
 	/**
@@ -111,6 +117,19 @@ namespace HOO{
 		 */
 		void setQty(float);
 		/**
+		 * this method removes a certain quantity of items, if the resulting
+		 * _quantity is below 0, it sets quantity = 0 and returns the quantity
+		 * it could not remove.
+		 * @param float qty
+		 * @return float rest
+		 */
+		float removeQty(float);
+		/**
+		 * this method adds a given quantity of item
+		 * @param float qty
+		 */
+		void addQty(float);
+		/**
 		 * this method sets the item that the goods instance is representing.
 		 * The Item is identified by its UID
 		 * @param uint32 ItemID
@@ -131,10 +150,10 @@ namespace HOO{
 	class Inventory{
 	private:
 		float _goldAmount;
-		vector<Goods> _goods;
+		std::vector<Goods> _goods;
 		float _maxWeight;
 		float _currentWeight;
-		std::map<uint32,int> _goodsList;
+		std::map<HOO::uint32,int> _goodsList;
 
 		/**
 		 * this method computes the goods list
@@ -142,13 +161,13 @@ namespace HOO{
 		void computeGoodsList(void);
 		/**
 		 * computes the sum of the weight of all stored goods
-		 * toghether
+		 * together
 		 */
 		void computeTotalWeight(void);
 
 	public:
 		Inventory(float gold = 0.0f);
-		Inventory(float gold, std::vector<goods> goodsVector);
+		Inventory(float gold, std::vector<Goods> goodsVector);
 		~Inventory();
 		/**
 		 * get the gold amount that is stored in the inventory
@@ -240,6 +259,37 @@ namespace HOO{
 
 } // end namespace
 
+
+
+//class Item
+inline HOO::Item::Item(String Name,float unitWeight, float minPrice, float maxPrice){
+	_minUnitPrice=minPrice;
+	_maxUnitPrice=maxPrice;
+	_unitWeight=unitWeight;
+	_name=Name;
+	computeMeanValue();
+	return;
+}
+inline HOO::Item::~Item(void){
+	return;
+}
+inline void HOO::Item::computeMeanValue(void){
+	_meanUnitPrice=(_minUnitPrice+_maxUnitPrice)/2;
+	return;
+}
+inline HOO::Vector3 HOO::Item::getPrices(void){
+	return HOO::Vector3(_minUnitPrice,_meanUnitPrice,_maxUnitPrice);
+}
+inline HOO::String HOO::Item::getName(void){
+	return _name;
+}
+
+inline float HOO::Item::getWeight(void){
+	return _unitWeight;
+}
+
+
+// class Goods
 inline void HOO::Goods::computeWeight(void){
 	_weight=_quantity * _item->getWeight();
 	return;
@@ -250,9 +300,20 @@ inline void HOO::Goods::setQty(float qty){
 	_quantity=qty;
 	return;
 }
+inline float HOO::Goods::removeQty(float qty){
+	_quantity-=qty;
+	float rest = 0.0f;
+	if (_quantity < 0){
+		rest = -_quantity;
+		_quantity = 0.0f;
+	}
+	return rest;
+}
+inline void HOO::Goods::addQty(float qty){
+	_quantity+=qty;
+	return;
+}
 inline HOO::uint32 HOO::Goods::getItem(void){return _itemUID;}
-
-
 inline float HOO::Inventory::getGoldAmount(void){return _goldAmount;}
 inline float HOO::Inventory::getTotalWeight(void){return _currentWeight;}
 

@@ -34,21 +34,8 @@
 #include "HOO_definitions.h"
 #include "HOO_gameObjects.h"
 
-//class Item
-HOO::Item::Item(String Name,float unitWeight, float minPrice, float maxPrice){
-	return;
-}
-HOO::Item::~Item(void){
-	return;
-}
-void HOO::Item::computeMeanValue(void){
-	return;
-}
-HOO::Vector3 HOO::Item::getPrices(void){
-	return;
-}
-HOO::String HOO::Item::getName(void){
-	return;
+template <class T> float HOO::getWeight(T item){
+	return item.getWeight();
 }
 
 
@@ -66,17 +53,24 @@ void HOO::Goods::setItem(HOO::uint32 ItemID){
 
 
 // class Inventory
-
 void HOO::Inventory::computeGoodsList(void){
+//	_goodsList;
 	return;
 }
-void computeTotalWeight(void){
+void HOO::Inventory::computeTotalWeight(void){
+	_currentWeight=0.0f;
+	for (int i = 0 ; i<=_goods.size();i++){
+		_currentWeight+=_goods[i].getWeight();
+	}
 	return;
 }
-HOO::Inventory::Inventory(float gold = 0.0f){
+HOO::Inventory::Inventory(float gold){
+	_goldAmount=gold;
 	return;
 }
 HOO::Inventory::Inventory(float gold, std::vector<Goods> goodsVector){
+	_goldAmount=gold;
+	_goods=goodsVector;
 	return;
 }
 HOO::Inventory::~Inventory(){
