@@ -99,7 +99,7 @@ namespace HOO{
 		void computeWeight(void);
 
 	public:
-		Goods(std::map<HOO::uint32,Item> * ItemMap ,HOO::uint32 ItemID, float qty);
+		Goods(std::map<HOO::uint32,Item*> * ItemMap ,HOO::uint32 ItemID, float qty);
 		~Goods(void);
 		/**
 		 * this method returns the total weight of the goods
@@ -134,7 +134,7 @@ namespace HOO{
 		 * The Item is identified by its UID
 		 * @param uint32 ItemID
 		 */
-		void setItem(HOO::uint32 ItemID);
+		void setItem(std::map<HOO::uint32,Item*> * ItemMap, HOO::uint32 ItemID);
 		/**
 		 * This method return the UID of the Item the instance is representing
 		 * @return uint32 ItemID

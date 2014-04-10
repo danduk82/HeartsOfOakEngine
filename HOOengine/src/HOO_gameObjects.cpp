@@ -40,26 +40,35 @@ template <class T> float HOO::getWeight(T item){
 
 
 //class Goods
-HOO::Goods::Goods(std::map<HOO::uint32,Item> * ItemMap ,HOO::uint32 ItemID, float qty){
+HOO::Goods::Goods(std::map<HOO::uint32,Item*> * ItemMap ,HOO::uint32 ItemID, float qty){
+	_item = ItemMap->at(ItemID);
+	_quantity=qty;
+	computeWeight();
 	return;
 }
 HOO::Goods::~Goods(void){
-	return;
 }
 
-void HOO::Goods::setItem(HOO::uint32 ItemID){
+void HOO::Goods::setItem(std::map<HOO::uint32,Item*> * ItemMap, HOO::uint32 ItemID){
+	_item = ItemMap->at(ItemID);
 	return;
 }
 
 
 // class Inventory
 void HOO::Inventory::computeGoodsList(void){
-//	_goodsList;
+	// init the goods list
+	if (! _goodsList.empty()) {
+		_goodsList = std::map<HOO::uint32,int>();
+	};
+	for (int i = 0; i <= _goods.size(); ++i){
+		_goodsList.insert(std::pair<HOO::uint32,int>(_goods[i].getItem(),_goods[i].getQty()));
+	}
 	return;
 }
 void HOO::Inventory::computeTotalWeight(void){
 	_currentWeight=0.0f;
-	for (int i = 0 ; i<=_goods.size();i++){
+	for (int i = 0 ; i <=_goods.size(); ++i){
 		_currentWeight+=_goods[i].getWeight();
 	}
 	return;

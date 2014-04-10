@@ -33,4 +33,33 @@
 // HOO specific headers
 #include "HOO_definitions.h"
 #include "HOO_gameObjects.h"
+#include "HOO_Character.h"
 
+HOO::Character::Character(){
+
+}
+
+HOO::Character::~Character(){
+
+}
+
+void HOO::Character::addCheckPoint(std::vector<HOO::Vector3> checkPtVct){
+	_checkpoints.insert(_checkpoints.end(),checkPtVct.begin(),checkPtVct.end());
+}
+
+void HOO::Character::addCheckPoint(HOO::Vector3 checkPt){
+	_checkpoints.push_back(checkPt);
+}
+
+void HOO::Character::deleteCheckpoints(void){
+	if (! _checkpoints.empty()){
+		_checkpoints=std::vector<HOO::Vector3>();
+	}
+}
+
+bool HOO::Character::isMoving(void){
+	return true;
+}
+bool HOO::Character::isRunning(void){
+	return true;
+}

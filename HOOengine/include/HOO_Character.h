@@ -42,7 +42,7 @@ namespace HOO{
 	class Character{
 	private:
 		// character's unique identifier
-		uint64 _uid;
+		HOO::uint64 _uid;
 
 		// status variables
 		// if the character can by played by the user
@@ -52,8 +52,8 @@ namespace HOO{
 		// if it is visible (not the same as active)
 		bool _isVisible;
 		// if it is active, i.e. if the IA engine is taking care of him or not
-		// usually far away characters are unactive, or sailors on boat out of sight
-		// are also unactive (to save a lot of CPU)
+		// usually far away characters are inactive, or sailors on boat out of sight
+		// are also inactive (to save a lot of CPU)
 		bool _isActive;
 		// if the character is moving (see animations states)
 		bool _isMoving;
@@ -69,9 +69,9 @@ namespace HOO{
 		bool _asItemInLeftHand;
 
 		// direction it is facing
-		Vector3 _lookingAt;
+		HOO::Vector3 _lookingAt;
 		// health: vector2 because of 0=health ; 1=armor
-		Vector2 _health;
+		HOO::Vector2 _health;
 
 		// basic characteristics
 		float _walkSpeed;
@@ -79,7 +79,7 @@ namespace HOO{
 		float _jumpHeight;
 
 		// character's name
-		String _name;
+		HOO::String _name;
 
 		// the entity it corresponds
 		Ogre::Entity * _entity;
@@ -89,41 +89,48 @@ namespace HOO{
 		Ogre::MeshPtr * _mesh;
 
 		// animation states, this is very basic and will need deep improvements,
-		// but it's a beggining...
+		// but it's a beginning...
 		// animation for top of the body
-		Ogre::Animation _TopAnimation;
-		Ogre::AnimationState _topAniState;
+		Ogre::Animation* _TopAnimation;
+		Ogre::AnimationState* _topAniState;
 
 		// animation for bottom of the body
-		Ogre::Animation _BottomAnimation;
-		Ogre::AnimationState _bottomAniState;
+		Ogre::Animation* _BottomAnimation;
+		Ogre::AnimationState* _bottomAniState;
 
 		// jump animation
-		Ogre::Animation _jumpAnimation;
-		Ogre::AnimationState _jumpAniState;
+		Ogre::Animation* _jumpAnimation;
+		Ogre::AnimationState* _jumpAniState;
 
 		// fight animation
-		Ogre::Animation _fightAnimation;
-		Ogre::AnimationState _fightAniState;
+		Ogre::Animation* _fightAnimation;
+		Ogre::AnimationState* _fightAniState;
 
 		// IDLE animation
-		Ogre::Animation _idleAnimation;
-		Ogre::AnimationState _idleAniState;
+		Ogre::Animation* _idleAnimation;
+		Ogre::AnimationState* _idleAniState;
 
 		// what the character has in his inventory
 		Inventory _inventory;
 
 		// "IA" section (veeeery basic for the moment)
 		// list of coordinates where he should go (in order of execution)
-		vector<Vector3> _checkpoints;
+		std::vector<HOO::Vector3> _checkpoints;
 
 	public:
 		Character();
 		~Character();
 		/**
 		 * add checkpoints to the list of points to reach
+		 * @param HOO::Vector3 checkPt
 		 */
-		void addCheckPoint(Vector3);
+		void addCheckPoint(HOO::Vector3 checkPt);
+		/**
+		 * overloaded version which adds a checkpoints vector
+		 * to the list of points to reach
+		 * @param std::vector<HOO::Vector3> checkPtVct
+		 */
+		void addCheckPoint(std::vector<HOO::Vector3> checkPtVct);
 		/**
 		 * remove all checkpoints (clears the list)
 		 */
