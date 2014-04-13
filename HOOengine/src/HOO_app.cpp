@@ -194,7 +194,7 @@ void HOO::Application::createScene(){
 	//LyonHoy->setCastShadows(true);
 	//barrelNode->attachObject( barrel );
 	LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
-	std::cout << "LyonHoy visibility is set to : "<<LyonHoy->getVisible()<<std::endl;
+//	std::cout << "LyonHoy visibility is set to : "<<LyonHoy->getVisible()<<std::endl;
 
 
 #ifdef _DEBUG
