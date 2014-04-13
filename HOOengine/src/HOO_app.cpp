@@ -1,4 +1,5 @@
 #include "HOO_app.h"
+#include "HOO_Character.h"
 
 #ifdef _DEBUG
 	void samy::createScene(){
@@ -12,27 +13,31 @@
 }
 #endif
 
-Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogre::SceneNode * node, const Ogre::String& entityName, const Ogre::String& meshName, HOO::entityVector * debugEntityVector){
-	Ogre::Entity * Ent;
+
+void HOO::allocateEntityToNode(Ogre::SceneManager *& SceneManager,  Ogre::SceneNode *& node, Ogre::Entity*& Ent ,  const Ogre::String& entityName, const Ogre::String& meshName, HOO::entityVector * debugEntityVector){
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
+		node->attachObject(Ent);
+
 	} catch( Ogre::Exception & e ){
-		Ent = SceneManager->createEntity( entityName, "Sinbad.mesh");
+		Ent = SceneManager->createEntity( entityName, "cube.mesh");
+
 		debugEntityVector->push_back(Ent);
 		Ogre::String message = "WARNING ! Failed to load the following mesh : ";
 		message += meshName;
 		Ogre::LogManager::getSingletonPtr()->logMessage( message);
 		node->attachObject(Ent);
+		float scale=0.2f;
+		node->setScale(scale,scale,scale);
 
 		Ogre::String txtName = "ErrorTxtObject_n";
 		txtName += debugEntityVector->size();
-		Ogre::MovableText* msg = new Ogre::MovableText(txtName, message ,"BlueHighway-8",2,Ogre::ColourValue::Green);
+		Ogre::MovableText* msg = new Ogre::MovableText(txtName, message ,"BlueHighway-8",int(2/scale),Ogre::ColourValue::Green);
 		msg->setTextAlignment(Ogre::MovableText::H_CENTER, Ogre::MovableText::V_CENTER); // Center horizontally and display above the node
 		Ogre::AxisAlignedBox AABB =Ent->getWorldBoundingBox(true);
-		msg->setLocalTranslation(Ogre::Vector3(0.0f,AABB.getHalfSize()[2],0.0f));
+		msg->setLocalTranslation(Ogre::Vector3(0.0f,AABB.getHalfSize()[2]+0.1f,0.0f));
 		node->attachObject(msg);
 	}
-	return Ent;
 }
 
 HOO::Application::Application(){
@@ -165,10 +170,15 @@ int HOO::Application::startup(){
 	return 0;
 }
 
+
+
 void HOO::Application::createScene(){
-	_PlayerEnt = _sceneManager->createEntity("Sinbad.mesh");
 	_PlayerNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
-	_PlayerNode->attachObject(_PlayerEnt);
+//	_PlayerEnt = _sceneManager->createEntity("Sinbad.mesh");
+//	_PlayerNode->attachObject(_PlayerEnt);
+	allocateEntityToNode(_sceneManager,_PlayerNode, _PlayerEnt,"Player","Sinbad.mesh" ,_debugDrawEntitiesVector);
+	//	 _PlayerEnt  = _sceneManager->getEntity("Player");
+	HOO::PlayerCharacter cc("Player",_PlayerEnt, _PlayerNode );
 
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
@@ -186,15 +196,15 @@ void HOO::Application::createScene(){
 
 	_sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+
 	// Create a skydome
 	_sceneManager->setSkyDome(true, "Examples/CloudySky", 30, 5);
 
-	Ogre::SceneNode* LyonHoyNode = _sceneManager->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
-	Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
-	//LyonHoy->setCastShadows(true);
-	//barrelNode->attachObject( barrel );
-	LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
-//	std::cout << "LyonHoy visibility is set to : "<<LyonHoy->getVisible()<<std::endl;
+//	_sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_ADDITIVE);
+//	Ogre::SceneNode* LyonHoyNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
+//	Ogre::Entity* LyonHoyEnt ;//= _sceneManager->createEntity("LyonHoy", "LyonHoy.mesh");
+////	LyonHoyNode->attachObject(LyonHoyEnt);
+//	allocateEntityToNode(_sceneManager,LyonHoyNode, LyonHoyEnt,"LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
 
 
 #ifdef _DEBUG

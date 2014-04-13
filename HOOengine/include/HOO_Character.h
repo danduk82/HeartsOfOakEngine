@@ -68,8 +68,10 @@ namespace HOO{
 		bool _asWeaponInLeftHand;
 		bool _asItemInLeftHand;
 
-		// direction it is facing
+		// direction it is facing (eg. during targeting, etc)
 		HOO::Vector3 _lookingAt;
+		// orientation of the mesh
+		HOO::Vector3 _orientation;
 		// health: vector2 because of 0=health ; 1=armor
 		HOO::Vector2 _health;
 
@@ -118,8 +120,14 @@ namespace HOO{
 		std::vector<HOO::Vector3> _checkpoints;
 
 	public:
-		Character();
+		Character(HOO::String name , Ogre::Entity * entity = NULL, Ogre::SceneNode * node = NULL );
 		~Character();
+
+		/**
+		 * define animations
+		 */
+		void defineAnimations(void);
+
 		/**
 		 * add checkpoints to the list of points to reach
 		 * @param HOO::Vector3 checkPt
@@ -141,7 +149,9 @@ namespace HOO{
 	};
 
 	class PlayerCharacter : public Character{
-
+	public:
+		PlayerCharacter(HOO::String name , Ogre::Entity * entity = NULL, Ogre::SceneNode * node = NULL );
+		~PlayerCharacter();
 	};
 }
 

@@ -29,13 +29,14 @@ The sources and binaries will need approx 3Gb of Hard drive space (if you instal
  - gcc
  - g++
  - cpp
- - xaw3dg(-dev) (X11 athena widget) 
+ - xaw3dg-dev (X11 athena widget) 
  - libxaw7-dev 
  - libboost-dev
  - libgl1-mesa-glx
  - libgl1-mesa-swx11
  - libglu1-mesa
  - libxrandr-dev
+ - nvidida-cg-toolkit (needed even if no nvidia card, don't worry)
 
 
 1.1.2 Build the engine
