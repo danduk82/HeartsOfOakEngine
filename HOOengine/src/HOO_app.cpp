@@ -17,7 +17,7 @@ Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogr
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
 	} catch( Ogre::Exception & e ){
-		Ent = SceneManager->createEntity( entityName, "ogrehead.mesh");
+		Ent = SceneManager->createEntity( entityName, "Sinbad.mesh");
 		debugEntityVector->push_back(Ent);
 		Ogre::String message = "WARNING ! Failed to load the following mesh : ";
 		message += meshName;

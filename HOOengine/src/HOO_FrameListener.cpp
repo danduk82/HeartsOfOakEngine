@@ -1,14 +1,14 @@
 #include "HOO_app.h"
 
-
 HOO::FrameListener::FrameListener(){
 	_debugEntitiesVector=NULL;
 	_node=NULL;
 	_Cam=NULL;
 	_viewport=NULL;
 }
+
 HOO::FrameListener::~FrameListener(){}
-void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera* cam,Ogre::Viewport* viewport,Ogre::SceneNode* node,Ogre::Entity* ent, entityVector * entityDebugVector){
+void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, Ogre::Viewport* viewport, Ogre::SceneNode* node,Ogre::Entity* ent, entityVector * entityDebugVector){
 	_Cam = cam;
 	_movementspeed = 50.0f;
 	_viewport = viewport;
@@ -47,7 +47,6 @@ void HOO::FrameListener::StartFrameListener(Ogre::RenderWindow* win,Ogre::Camera
 	_aniStateTop = ent->getAnimationState("RunTop");
 	_aniStateTop->setLoop(false);
 
-
 }
 
 void HOO::FrameListener::StopFrameListener(){
@@ -61,10 +60,10 @@ void HOO::FrameListener::StopFrameListener(){
 
 bool HOO::FrameListener::processUnbufferedKeyInput(const Ogre::FrameEvent& evt){return true;}
 void HOO::FrameListener::processCamaraKeyInput(void){return;}
+
 // Overriden
 bool HOO::FrameListener::processUnbufferedMouseInput(const Ogre::FrameEvent& evt){return true;}
 void HOO::FrameListener::moveCamera(){return;}
-
 
 
 bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
@@ -127,7 +126,6 @@ bool HOO::FrameListener::frameStarted(const Ogre::FrameEvent& evt){
 
 	_Cam->yaw(Ogre::Radian(rotX));
 	_Cam->pitch(Ogre::Radian(rotY));
-
 
 	Ogre::Vector3 SinbadTranslate(0,0,0);
 	float _rotation = 0.0f;
