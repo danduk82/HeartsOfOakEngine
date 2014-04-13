@@ -1,16 +1,18 @@
 #include "HOO_app.h"
-void samy::createScene(){
-	Ogre::SceneNode* LyonHoyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
-		Ogre::Entity *LyonHoy =mSceneMgr->createEntity("LyonHoy", "LyonHoy.mesh" );
 
-		//Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
-		//LyonHoy->setCastShadows(true);
-		//barrelNode->attachObject( barrel );
-		//LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
+#ifdef _DEBUG
+	void samy::createScene(){
+		Ogre::SceneNode* LyonHoyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
+			Ogre::Entity *LyonHoy =mSceneMgr->createEntity("LyonHoy", "LyonHoy.mesh" );
 
+			//Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
+			//LyonHoy->setCastShadows(true);
+			//barrelNode->attachObject( barrel );
+			//LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));
 }
+#endif
 
-Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogre::SceneNode * node, const Ogre::String& entityName, const Ogre::String& meshName, entityVector * debugEntityVector){
+Ogre::Entity * HOO::allocateEntityToNode(Ogre::SceneManager * SceneManager,  Ogre::SceneNode * node, const Ogre::String& entityName, const Ogre::String& meshName, HOO::entityVector * debugEntityVector){
 	Ogre::Entity * Ent;
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
@@ -188,9 +190,7 @@ void HOO::Application::createScene(){
 	_sceneManager->setSkyDome(true, "Examples/CloudySky", 30, 5);
 
 	Ogre::SceneNode* LyonHoyNode = _sceneManager->getRootSceneNode()->createChildSceneNode("LyonHoySceneNode");
-	Ogre::Entity *LyonHoy =_sceneManager->createEntity("LyonHoy", "LyonHoy.mesh" );
-
-	//Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
+	Ogre::Entity *LyonHoy = allocateEntityToNode(_sceneManager,LyonHoyNode, "LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
 	//LyonHoy->setCastShadows(true);
 	//barrelNode->attachObject( barrel );
 	LyonHoyNode->setPosition(Ogre::Vector3(10,10,10));

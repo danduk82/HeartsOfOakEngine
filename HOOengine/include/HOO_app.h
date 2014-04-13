@@ -40,18 +40,16 @@
 #include "HOO_definitions.h"
 #include "HOO_gameObjects.h"
 
-
-#include "ExampleApplication.h"
-
-
-class samy : public ExampleApplication{
-private:
-		Ogre::SceneNode* _PlayerNode;
-		Ogre::Entity* _PlayerEnt;
-public:
-		void createScene(void);
-};
-
+#ifdef _DEBUG
+	#include "ExampleApplication.h"
+	class samy : public ExampleApplication{
+	private:
+			Ogre::SceneNode* _PlayerNode;
+			Ogre::Entity* _PlayerEnt;
+	public:
+			void createScene(void);
+	};
+#endif
 
 namespace HOO{
 
