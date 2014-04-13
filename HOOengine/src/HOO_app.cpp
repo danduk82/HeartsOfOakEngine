@@ -14,7 +14,7 @@
 #endif
 
 
-void HOO::allocateEntityToNode(Ogre::SceneManager *& SceneManager,  Ogre::SceneNode *& node, Ogre::Entity*& Ent ,  const Ogre::String& entityName, const Ogre::String& meshName, HOO::entityVector * debugEntityVector){
+int HOO::allocateEntityToNode(Ogre::SceneManager *& SceneManager,  Ogre::SceneNode *& node, Ogre::Entity*& Ent ,  const Ogre::String& entityName, const Ogre::String& meshName, HOO::entityVector * debugEntityVector){
 	try{
 		Ent = SceneManager->createEntity( entityName, meshName );
 		node->attachObject(Ent);
@@ -37,7 +37,9 @@ void HOO::allocateEntityToNode(Ogre::SceneManager *& SceneManager,  Ogre::SceneN
 		Ogre::AxisAlignedBox AABB =Ent->getWorldBoundingBox(true);
 		msg->setLocalTranslation(Ogre::Vector3(0.0f,AABB.getHalfSize()[2]+0.1f,0.0f));
 		node->attachObject(msg);
+		return HOO::ALLOCATEFAIL;
 	}
+	return HOO::SUCCESS;
 }
 
 HOO::Application::Application(){
@@ -203,7 +205,7 @@ void HOO::Application::createScene(){
 //	_sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_ADDITIVE);
 //	Ogre::SceneNode* LyonHoyNode = _sceneManager->getRootSceneNode()->createChildSceneNode();
 //	Ogre::Entity* LyonHoyEnt ;//= _sceneManager->createEntity("LyonHoy", "LyonHoy.mesh");
-////	LyonHoyNode->attachObject(LyonHoyEnt);
+//	LyonHoyNode->attachObject(LyonHoyEnt);
 //	allocateEntityToNode(_sceneManager,LyonHoyNode, LyonHoyEnt,"LyonHoy", "LyonHoy.mesh" ,_debugDrawEntitiesVector);
 
 
